@@ -1,17 +1,28 @@
 language: php
 
+services:
+  - postgresql
+
 php:
-    - 7.1
-    - 7.2
-    - 7.3
+  - 7.1
+  - 7.2
+  - 7.3
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+env:
+  - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
 
 before_script:
-    - travis_retry composer self-update
-    - travis_retry composer install --no-interaction --prefer-source
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-source
+  - sh -c "if [ '$DB_TYPE' = 'pgsql' ]; then psql -c 'CREATE DATABASE yii2_enum;' -U postgres; fi"
 
 script:
-    - composer lint
-    - travis_retry composer cover
+  - composer lint
+  - travis_retry composer cover
 
 after_success:
-    - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash)

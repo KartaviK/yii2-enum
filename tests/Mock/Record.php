@@ -20,6 +20,11 @@ class Record extends db\ActiveRecord
         return 'record';
     }
 
+    public function init()
+    {
+        $this->trigger(Yii2\Behaviors\EnumBehavior::EVENT_TO_ENUMS);
+    }
+
     public function behaviors(): array
     {
         return [

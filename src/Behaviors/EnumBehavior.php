@@ -2,9 +2,9 @@
 
 namespace Kartavik\Yii2\Behaviors;
 
+use MyCLabs\Enum\Enum;
 use yii\base;
 use yii\db;
-use MyCLabs\Enum\Enum;
 
 /**
  * Class EnumBehavior
@@ -31,6 +31,9 @@ use MyCLabs\Enum\Enum;
  */
 class EnumBehavior extends base\Behavior
 {
+    public const EVENT_TO_ENUMS = 'toEnums';
+    public const EVENT_TO_VALUES = 'toValues';
+
     /**
      * Key used for EnumBehavior class, value is array of attributes that must be converted into this enum
      *
@@ -54,17 +57,19 @@ class EnumBehavior extends base\Behavior
     public function events(): array
     {
         return [
-            db\ActiveRecord::EVENT_AFTER_FIND => 'after',
-            db\ActiveRecord::EVENT_AFTER_INSERT => 'after',
-            db\ActiveRecord::EVENT_BEFORE_INSERT => 'before',
-            db\ActiveRecord::EVENT_BEFORE_UPDATE => 'before',
+            EnumBehavior::EVENT_TO_ENUMS => 'toEnums',
+            EnumBehavior::EVENT_TO_VALUES => 'toValues',
+            db\ActiveRecord::EVENT_AFTER_FIND => 'toValues',
+            db\ActiveRecord::EVENT_AFTER_INSERT => 'toValues',
+            db\ActiveRecord::EVENT_BEFORE_INSERT => 'toEnums',
+            db\ActiveRecord::EVENT_BEFORE_UPDATE => 'toEnums'
         ];
     }
 
     /**
      * @throws base\InvalidConfigException
      */
-    public function before(): void
+    public function toEnums(): void
     {
         $this->validateAttributes();
 
@@ -83,7 +88,7 @@ class EnumBehavior extends base\Behavior
     /**
      * @throws base\InvalidConfigException
      */
-    public function after(): void
+    public function toValues(): void
     {
         $this->validateAttributes();
 

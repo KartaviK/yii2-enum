@@ -94,4 +94,17 @@ class EnumBehaviorTest extends TestCase
 
         $model->save();
     }
+
+    public function testTriggerEventToValues(): void
+    {
+        $record = new Mock\Record([
+            'first' => Mock\TestEnum::FIRST(),
+            'second' => Mock\TestEnum::SECOND(),
+        ]);
+
+        $record->trigger(EnumBehavior::EVENT_TO_VALUES);
+
+        $this->assertEquals(Mock\TestEnum::FIRST, $record->first);
+        $this->assertEquals(Mock\TestEnum::SECOND, $record->second);
+    }
 }

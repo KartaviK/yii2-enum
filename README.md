@@ -74,18 +74,18 @@ class SomeService extends \yii\base\Model
     public $value;
     
     public function behaviors(): array
-        {
-            return [
-                'enum' => [
-                    'class' => \Kartavik\Yii2\Behaviors\EnumBehavior::class,
-                    'enumsAttributes' => [
-                        YourEnum::class => [
-                            'value',
-                        ]
+    {
+        return [
+            'enum' => [
+                'class' => \Kartavik\Yii2\Behaviors\EnumBehavior::class,
+                'enumsAttributes' => [
+                    YourEnum::class => [
+                        'value',
                     ]
                 ]
-            ];
-        }
+            ]
+        ];
+    }
     
     public function init(): void
     {

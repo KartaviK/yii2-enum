@@ -59,6 +59,10 @@ $record = new Record([
 ]);
 
 $record->save(); // will return true
+
+$record = Record::find()->where(['id' => $record->id])->all()[0];
+
+print_r($record->attribute1); // Will output YourEnum object with value `first`
 ```
 
 You can trigger it by your self

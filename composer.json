@@ -1,0 +1,42 @@
+{
+    "name": "kartavik/yii2-enum",
+    "description": "Enum type for BaseObject properties",
+    "type": "library",
+    "require": {
+        "myclabs/php-enum": "^1.6",
+        "yiisoft/yii2": "~2.0.13.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roman Varkuta",
+            "email": "roman.varkuta@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Kartavik\\Yii2\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kartavik\\Yii2\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "7.1"
+        }
+    },
+    "scripts": {
+        "lint": "phpcs --standard=PSR2 ./src ./tests",
+        "phpcbf": "phpcbf --standard=PSR2 ./src ./tests",
+        "cover": "phpunit --coverage-clover=coverage.xml",
+        "test": "phpunit"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    }
+}

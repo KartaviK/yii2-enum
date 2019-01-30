@@ -22,82 +22,6 @@ class YourEnum extends \MyCLabs\Enum\Enum
 }
 ```
 
-### Behavior
-
-It can be used for classes that extends ActiveRecord
-
-```php
-<?php
-
-use YourEnum;
-
-/**
- * @property YourEnum $attribute1
- * @property YourEnum $attribute2
- */
-class Record extends \yii\db\ActiveRecord
-{
-    public function behaviors(): array
-    {
-        return [
-            'enum' => [
-                'class' => \Kartavik\Yii2\Behaviors\EnumMappingBehavior::class,
-                'enumsAttributes' => [
-                    YourEnum::class => [
-                        'attribute1',
-                        'attribute2',
-                    ]
-                ]
-            ]
-        ];
-    }
-}
-
-$record = new Record([
-    'attribute1' => YourEnum::FIRST_VALUE, // use const
-    'attribute2' => YourEnum::SECOND_VALUE // use method
-]);
-
-$record->save(); // will return true
-
-$record = Record::find()->where(['id' => $record->id])->all()[0];
-
-print_r($record->attribute1); // Will output YourEnum object with value `first`
-```
-
-You can trigger it by your self
-
-```php
-<?php
-
-use YourEnum;
-
-class SomeService extends \yii\base\Model
-{
-    /** @var YourEnum */
-    public $value;
-    
-    public function behaviors(): array
-    {
-        return [
-            'enum' => [
-                'class' => \Kartavik\Yii2\Behaviors\EnumMappingBehavior::class,
-                'enumsAttributes' => [
-                    YourEnum::class => [
-                        'value',
-                    ]
-                ]
-            ]
-        ];
-    }
-    
-    public function init(): void
-    {
-        $this->trigger(\Kartavik\Yii2\Behaviors\EnumMappingBehavior::EVENT_TO_ENUMS);
-    }
-}
-```
-
 ## Validator
 
 This validator used `MyCLabs\Enum\Enum::isValid($value)` method and also checked value on instance of your enum;
@@ -141,11 +65,63 @@ class Record extends \yii\db\ActiveRecord
 }
 
 $record = new Record([
+    'attribute1' => YourEnum::FIRST_VALUE, // use constant
+    'attribute2' => YourEnum::SECOND_VALUE(), // use method
+]);
+
+$record->trigger(Yii2\Behaviors\EnumMappingBehavior::EVENT_TO_ENUMS); // trigger if you put values not instance of Enum
+
+$record->validate(); // will return true
+```
+
+### Behavior
+
+It can be used for classes that extends ActiveRecord
+
+```php
+<?php
+
+use YourEnum;
+
+/**
+ * @property YourEnum $attribute1
+ * @property YourEnum $attribute2
+ */
+class Record extends \yii\db\ActiveRecord
+{
+    public function behaviors(): array
+    {
+        return [
+            'enum' => [
+                'class' => \Kartavik\Yii2\Behaviors\EnumMappingBehavior::class,
+                'enumsAttributes' => [
+                    YourEnum::class => [
+                        'attribute1',
+                        'attribute2',
+                    ]
+                ]
+            ]
+        ];
+    }
+}
+
+$record = new Record([
     'attribute1' => YourEnum::FIRST_VALUE, // use const
     'attribute2' => YourEnum::SECOND_VALUE() // use method
 ]);
 
-$record->validate(); // will return true
+$this->trigger(\Kartavik\Yii2\Behaviors\EnumMappingBehavior::EVENT_TO_ENUMS);
+$record->save(); // will return true
+
+$record = Record::find()->where(['id' => $record->id])->all()[0];
+
+print_r($record->attribute1); // Will output YourEnum object with value `first`
+
+Record::updateAll(['attribute1' => YourEnum::SECOND_VALUE()]); // Updating records with new enum
+
+$record = Record::find()->where(['id' => $record->id])->all()[0];
+
+print_r($record->attribute1); // Will output YourEnum object with value `second`
 ```
 
 ## Suggest

@@ -7,12 +7,12 @@ use yii\base;
 use yii\db;
 
 /**
- * Class EnumBehavior
+ * Class EnumMappingBehavior
  *
  * ```php
  * return [
  *      'enum' => [
- *          'class' => \Kartavik\Yii2\Behaviors\EnumBehavior::class,
+ *          'class' => \Kartavik\Yii2\Behaviors\EnumMappingBehavior::class,
  *          'enumsAttributes' => [
  *              FirstYourEnum::class => [
  *                  'attribute1,
@@ -29,13 +29,13 @@ use yii\db;
  *
  * @package Kartavik\Yii2\Behaviors
  */
-class EnumBehavior extends base\Behavior
+class EnumMappingBehavior extends base\Behavior
 {
     public const EVENT_TO_ENUMS = 'toEnums';
     public const EVENT_TO_VALUES = 'toValues';
 
     /**
-     * Key used for EnumBehavior class, value is array of attributes that must be converted into this enum
+     * Key used for EnumMappingBehavior class, value is array of attributes that must be converted into this enum
      *
      * ```php
      * [
@@ -57,19 +57,19 @@ class EnumBehavior extends base\Behavior
     public function events(): array
     {
         return [
-            EnumBehavior::EVENT_TO_ENUMS => 'toEnums',
-            EnumBehavior::EVENT_TO_VALUES => 'toValues',
-            db\ActiveRecord::EVENT_AFTER_FIND => 'toValues',
-            db\ActiveRecord::EVENT_AFTER_INSERT => 'toValues',
-            db\ActiveRecord::EVENT_BEFORE_INSERT => 'toEnums',
-            db\ActiveRecord::EVENT_BEFORE_UPDATE => 'toEnums'
+            EnumMappingBehavior::EVENT_TO_ENUMS => 'toEnums',
+            EnumMappingBehavior::EVENT_TO_VALUES => 'toValues',
+            db\ActiveRecord::EVENT_AFTER_FIND => 'toEnums',
+            db\ActiveRecord::EVENT_AFTER_INSERT => 'toEnums',
+            db\ActiveRecord::EVENT_BEFORE_INSERT => 'toValues',
+            db\ActiveRecord::EVENT_BEFORE_UPDATE => 'toValues'
         ];
     }
 
     /**
      * @throws base\InvalidConfigException
      */
-    public function toEnums(): void
+    public function toValues(): void
     {
         $this->validateAttributes();
 
@@ -88,7 +88,7 @@ class EnumBehavior extends base\Behavior
     /**
      * @throws base\InvalidConfigException
      */
-    public function toValues(): void
+    public function toEnums(): void
     {
         $this->validateAttributes();
 
@@ -96,7 +96,9 @@ class EnumBehavior extends base\Behavior
 
         foreach ($fetchedAttributesEnums as $enum => $attributes) {
             foreach ($attributes as $attribute => $value) {
-                $this->owner->$attribute = new $enum($value);
+                if (!$value instanceof Enum) {
+                    $this->owner->$attribute = new $enum($value);
+                }
             }
         }
     }

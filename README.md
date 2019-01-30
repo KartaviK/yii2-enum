@@ -41,7 +41,7 @@ class Record extends \yii\db\ActiveRecord
     {
         return [
             'enum' => [
-                'class' => \Kartavik\Yii2\Behaviors\EnumBehavior::class,
+                'class' => \Kartavik\Yii2\Behaviors\EnumMappingBehavior::class,
                 'enumsAttributes' => [
                     YourEnum::class => [
                         'attribute1',
@@ -55,7 +55,7 @@ class Record extends \yii\db\ActiveRecord
 
 $record = new Record([
     'attribute1' => YourEnum::FIRST_VALUE, // use const
-    'attribute2' => YourEnum::SECOND_VALUE() // use method
+    'attribute2' => YourEnum::SECOND_VALUE // use method
 ]);
 
 $record->save(); // will return true
@@ -81,7 +81,7 @@ class SomeService extends \yii\base\Model
     {
         return [
             'enum' => [
-                'class' => \Kartavik\Yii2\Behaviors\EnumBehavior::class,
+                'class' => \Kartavik\Yii2\Behaviors\EnumMappingBehavior::class,
                 'enumsAttributes' => [
                     YourEnum::class => [
                         'value',
@@ -93,7 +93,7 @@ class SomeService extends \yii\base\Model
     
     public function init(): void
     {
-        $this->trigger(\Kartavik\Yii2\Behaviors\EnumBehavior::EVENT_TO_ENUMS);
+        $this->trigger(\Kartavik\Yii2\Behaviors\EnumMappingBehavior::EVENT_TO_ENUMS);
     }
 }
 ```
@@ -106,6 +106,7 @@ This validator used `MyCLabs\Enum\Enum::isValid($value)` method and also checked
 <?php
 
 use YourEnum;
+use Kartavik\Yii2;
 
 /**
  * @property YourEnum $attribute1
@@ -117,7 +118,7 @@ class Record extends \yii\db\ActiveRecord
     {
         return [
             'enum' => [
-                'class' => \Kartavik\Yii2\Behaviors\EnumBehavior::class,
+                'class' => Yii2\Behaviors\EnumMappingBehavior::class,
                 'enumsAttributes' => [
                     YourEnum::class => [
                         'attribute1',
@@ -132,7 +133,7 @@ class Record extends \yii\db\ActiveRecord
         return [
             [
                 ['attribute1', 'attribute2'],
-                \Kartavik\Yii2\Validators\EnumValidator::class,
+                Yii2\Validators\EnumValidator::class,
                 'targetEnum' => YourEnum::class,
             ]
         ];

@@ -21,7 +21,7 @@ class Model extends base\Model
     {
         return [
             'enum' => [
-                'class' => Yii2\Behaviors\EnumBehavior::class,
+                'class' => Yii2\Behaviors\EnumMappingBehavior::class,
                 'enumsAttributes' => [
                     TestEnum::class => [
                         'first',

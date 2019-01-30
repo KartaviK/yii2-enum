@@ -22,14 +22,14 @@ class Record extends db\ActiveRecord
 
     public function init()
     {
-        $this->trigger(Yii2\Behaviors\EnumBehavior::EVENT_TO_ENUMS);
+        $this->trigger(Yii2\Behaviors\EnumMappingBehavior::EVENT_TO_ENUMS);
     }
 
     public function behaviors(): array
     {
         return [
             'enum' => [
-                'class' => Yii2\Behaviors\EnumBehavior::class,
+                'class' => Yii2\Behaviors\EnumMappingBehavior::class,
                 'enumsAttributes' => [
                     TestEnum::class => [
                         'first',
@@ -37,7 +37,7 @@ class Record extends db\ActiveRecord
                 ],
             ],
             'enum2' => [
-                'class' => Yii2\Behaviors\EnumBehavior::class,
+                'class' => Yii2\Behaviors\EnumMappingBehavior::class,
                 'enumsAttributes' => [
                     TestEnum::class => 'second',
                 ]

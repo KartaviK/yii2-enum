@@ -10,13 +10,13 @@ use MyCLabs\Enum\Enum;
  *
  * @method static TestEnum FIRST()
  * @method static TestEnum SECOND()
+ * @method static TestEnum THIRD()
  * @method static TestEnum NULLABLE()
- * @method static TestEnum STRING()
  */
 final class TestEnum extends Enum
 {
     public const NULLABLE = null;
-    public const FIRST = 'first';
+    public const FIRST = "first";
     public const SECOND = 'second';
     public const THIRD = 'third';
 }

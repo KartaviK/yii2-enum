@@ -18,7 +18,7 @@ class EnumValidator extends validators\Validator
     {
         $value = $model->$attribute;
 
-        if ($value instanceof $this->targetEnum || $this->targetEnum::isValid($value)) {
+        if ($value instanceof $this->targetEnum) {
             return true;
         }
 

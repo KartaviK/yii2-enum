@@ -2,7 +2,7 @@
 
 namespace Kartavik\Yii2\Tests\Unit;
 
-use Kartavik\Yii2\Behaviors\EnumBehavior;
+use Kartavik\Yii2\Behaviors\EnumMappingBehavior;
 use Kartavik\Yii2\Tests\Mock;
 use yii\base;
 use yii\db\ActiveRecord;
@@ -17,7 +17,7 @@ class EnumBehaviorTest extends TestCase
     {
         $model = new Mock\Model([
             'first' => Mock\TestEnum::FIRST(),
-            'second' => Mock\TestEnum::SECOND,
+            'second' => Mock\TestEnum::SECOND(),
         ]);
 
         $this->assertTrue($model->validate());
@@ -34,6 +34,7 @@ class EnumBehaviorTest extends TestCase
         ]);
 
         $this->assertTrue($record->save());
+
         $this->assertEquals(Mock\TestEnum::FIRST(), $record->first);
         $this->assertEquals(Mock\TestEnum::SECOND(), $record->second);
     }
@@ -41,18 +42,50 @@ class EnumBehaviorTest extends TestCase
     public function testFindRecord(): void
     {
         $record = new Mock\Record([
-            'first' => Mock\TestEnum::FIRST(),
-            'second' => Mock\TestEnum::SECOND(),
+            'first' => Mock\TestEnum::FIRST,
+            'second' => Mock\TestEnum::SECOND,
         ]);
+
+        $this->assertEquals(Mock\TestEnum::FIRST, $record->first);
+        $this->assertEquals(Mock\TestEnum::SECOND, $record->second);
 
         $this->assertTrue($record->save());
 
+        $this->assertEquals(Mock\TestEnum::FIRST(), $record->first);
+        $this->assertEquals(Mock\TestEnum::SECOND(), $record->second);
+
         /** @var Mock\Record $find */
         $find = Mock\Record::find()->andWhere(['id' => $record->id])->all()[0];
+
         $this->assertNotSame($record, $find);
 
         $this->assertEquals(Mock\TestEnum::FIRST(), $find->first);
         $this->assertEquals(Mock\TestEnum::SECOND(), $find->second);
+    }
+
+    public function testUpdateRecord(): void
+    {
+        $record = new Mock\Record([
+            'first' => Mock\TestEnum::FIRST(),
+            'second' => Mock\TestEnum::SECOND(),
+        ]);
+
+        $this->assertEquals(Mock\TestEnum::FIRST(), $record->first);
+        $this->assertEquals(Mock\TestEnum::SECOND(), $record->second);
+
+        $this->assertTrue($record->save());
+
+        $this->assertEquals(Mock\TestEnum::FIRST(), $record->first);
+        $this->assertEquals(Mock\TestEnum::SECOND(), $record->second);
+
+        $newEnum = Mock\TestEnum::THIRD();
+
+        $this->assertGreaterThanOrEqual(1, Mock\Record::updateAll(['first' => $newEnum]));
+
+        /** @var Mock\Record $find */
+        $find = Mock\Record::find()->andWhere(['id' => $record->id])->all()[0];
+
+        $this->assertEquals($newEnum, $find->first);
     }
 
     public function testInvalidEnumClass(): void
@@ -74,7 +107,7 @@ class EnumBehaviorTest extends TestCase
             {
                 return [
                     'enum' => [
-                        'class' => EnumBehavior::class,
+                        'class' => EnumMappingBehavior::class,
                         'enumsAttributes' => [
                             'invalidEnumClass' => [
                                 'value',
@@ -102,9 +135,17 @@ class EnumBehaviorTest extends TestCase
             'second' => Mock\TestEnum::SECOND(),
         ]);
 
-        $record->trigger(EnumBehavior::EVENT_TO_VALUES);
+        $this->assertEquals(Mock\TestEnum::FIRST(), $record->first);
+        $this->assertEquals(Mock\TestEnum::SECOND(), $record->second);
+
+        $record->trigger(EnumMappingBehavior::EVENT_TO_VALUES);
 
         $this->assertEquals(Mock\TestEnum::FIRST, $record->first);
         $this->assertEquals(Mock\TestEnum::SECOND, $record->second);
+
+        $record->trigger(EnumMappingBehavior::EVENT_TO_ENUMS);
+
+        $this->assertEquals(Mock\TestEnum::FIRST(), $record->first);
+        $this->assertEquals(Mock\TestEnum::SECOND(), $record->second);
     }
 }

@@ -28,5 +28,14 @@ class EnumValidatorTest extends TestCase
         ]);
 
         $this->assertFalse($model->validate());
+
+        $this->assertEquals(
+            [
+                'second' => [
+                    "Attribute [second] must be instance Kartavik\Yii2\Tests\Mock\TestEnum"
+                ],
+            ],
+            $model->getErrors()
+        );
     }
 }

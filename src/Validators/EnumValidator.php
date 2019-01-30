@@ -22,7 +22,7 @@ class EnumValidator extends validators\Validator
             return true;
         }
 
-        $model->addError($attribute, "{$attribute} must be instance of or be part of {$this->targetEnum}");
+        $model->addError($attribute, "Attribute [{$attribute}] must be instance {$this->targetEnum}");
 
         return false;
     }

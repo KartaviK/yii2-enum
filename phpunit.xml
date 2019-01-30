@@ -1,4 +1,4 @@
-<phpunit backupGlobals="false" colors="true">
+<phpunit backupGlobals="false" colors="true" bootstrap="tests/autoload.php">
     <testsuites>
         <testsuite name="Test Suite">
             <directory suffix="Test.php">tests</directory>

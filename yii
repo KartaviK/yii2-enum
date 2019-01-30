@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+use yii\console\Application;
+use yii\console\controllers\MigrateController;
+use yii\helpers\ArrayHelper;
+
+require(__DIR__ . '/tests/autoload.php');
+
+$configPath = Yii::getAlias('@configFile');
+$testsConfig = is_file($configPath) ? require $configPath : [];
+$config = [
+    'controllerMap' => [
+        'migrate' => [
+            'class' => MigrateController::class,
+            'migrationNamespaces' => [
+                'Kartavik\\Yii2\\Tests\\Migration',
+            ],
+            'migrationPath' => null,
+        ],
+    ],
+];
+
+/** @noinspection PhpUnhandledExceptionInspection */
+$application = new Application(ArrayHelper::merge($testsConfig, $config));
+$exitCode = $application->run();
+exit($exitCode);

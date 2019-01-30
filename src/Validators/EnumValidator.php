@@ -21,7 +21,7 @@ use yii\validators;
  *          [
  *              ['attribute1', 'attribute2'],
  *              Kartavik\Yii2\Validators\EnumValidator::class,
- *              'targetEnum' => asd
+ *              'targetEnum' => YourEnum::class
  *          ]
  *      ]
  * }

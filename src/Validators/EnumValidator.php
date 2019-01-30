@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author Roman Varkuta <roman.varkuta@gmail.com>
+ * @license MIT
+ * @see https://github.com/myclabs/php-enum PHP enum implementation
+ * @version 1.0
+ */
 
 namespace Kartavik\Yii2\Validators;
 
@@ -7,6 +13,20 @@ use yii\validators;
 
 /**
  * Class EnumValidator
+ *
+ * ```php
+ * public function rules(): array
+ * {
+ *      return [
+ *          [
+ *              ['attribute1', 'attribute2'],
+ *              Kartavik\Yii2\Validators\EnumValidator::class,
+ *              'targetEnum' => asd
+ *          ]
+ *      ]
+ * }
+ * ```
+ *
  * @package Kartavik\Yii2\Validators
  */
 class EnumValidator extends validators\Validator

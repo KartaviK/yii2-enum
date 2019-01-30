@@ -1,6 +1,6 @@
 {
     "name": "kartavik/yii2-enum",
-    "description": "Enum type for BaseObject properties",
+    "description": "Yii2 enum mapping behavior / validator",
     "type": "library",
     "require": {
         "myclabs/php-enum": "^1.6",
@@ -56,6 +56,6 @@
         "yiisoft/yii2-phpunit": "dev-master"
     },
     "suggest": {
-        "horat1us/yii2-base": "To use ConstRangeValidator for attributes"
+        "horat1us/yii2-base": "For better validation for ranges of const values"
     }
 }

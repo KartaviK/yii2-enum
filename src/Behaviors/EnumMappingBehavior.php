@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author Roman Varkuta <roman.varkuta@gmail.com>
+ * @license MIT
+ * @see https://github.com/myclabs/php-enum
+ * @version 1.0
+ */
 
 namespace Kartavik\Yii2\Behaviors;
 

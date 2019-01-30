@@ -16,10 +16,9 @@
     "keywords": [
         "yii2",
         "enum",
-        "yii2 enum",
-        "yii2 enum validator",
-        "yii2 enum behavior",
-        "yii2 enum mapping"
+        "validator",
+        "mapping",
+        "behavior"
     ],
     "minimum-stability": "stable",
     "autoload": {

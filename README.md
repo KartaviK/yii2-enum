@@ -5,7 +5,7 @@ Based on [myclabs\php-enum](https://github.com/myclabs/php-enum) package;
 ## Installation
 
 ```bash
-composer require kartavk/yii2-enum
+composer require kartavik/yii2-enum
 ```
 
 ## Usage

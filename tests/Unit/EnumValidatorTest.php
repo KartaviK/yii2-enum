@@ -32,7 +32,36 @@ class EnumValidatorTest extends TestCase
         $this->assertEquals(
             [
                 'second' => [
-                    "Attribute [second] must be instance Kartavik\Yii2\Tests\Mock\TestEnum"
+                    "Attribute [second] must be instance or be part of Kartavik\Yii2\Tests\Mock\TestEnum"
+                ],
+            ],
+            $model->getErrors()
+        );
+    }
+
+    public function testNullableAttribute(): void
+    {
+        $model = new Mock\Model([
+            'first' => Mock\TestEnum::NULLABLE(),
+            'second' => null,
+        ]);
+
+        $this->assertTrue($model->validate());
+    }
+
+    public function testSimilarValues(): void
+    {
+        $model = new Mock\NumberRecord([
+            'first' => Mock\NumericEnum::NUMERIC,
+            'second' => (string)Mock\NumericEnum::REAL,
+        ]);
+
+        $this->assertFalse($model->validate());
+
+        $this->assertEquals(
+            [
+                'second' => [
+                    "Attribute [second] must be instance or be part of Kartavik\Yii2\Tests\Mock\NumericEnum"
                 ],
             ],
             $model->getErrors()

@@ -3,7 +3,7 @@
  * @author Roman Varkuta <roman.varkuta@gmail.com>
  * @license MIT
  * @see https://github.com/myclabs/php-enum
- * @version 1.1
+ * @version 2.0
  */
 
 namespace Kartavik\Yii2\Behaviors;
@@ -46,21 +46,15 @@ class EnumMappingBehavior extends base\Behavior
      *
      * ```php
      * [
-     *      FirstYourEnum::class => [
-     *          'attribute1,
-     *          'attribute2',
-     *      ],
-     *      SecondYourEnum::class => [
-     *          'attribute3,
-     *          'attribute4',
-     *      ],
+     *      'attribute1' => FirstYourEnum::class,
+     *      'attribute2' => SecondYourEnum::class,
      * ]
      * ```
      *
      * @var array
-     * @since 1.0
+     * @since 2.0
      */
-    public $enumsAttributes;
+    public $map;
 
     /**
      * In some cases database enum type can work only with string, so this parameter help behaviour to cast variable to
@@ -98,53 +92,37 @@ class EnumMappingBehavior extends base\Behavior
     {
         $this->validateAttributes();
 
-        $fetchedAttributesEnums = $this->fetchAttributes();
+        foreach ($this->map as $attribute => $enum) {
+            $value = $this->owner->$attribute;
 
-        foreach ($fetchedAttributesEnums as $enum => $attributes) {
-            foreach ($attributes as $attribute => $value) {
-                if ($value instanceof $enum) {
-                    /** @var \MyCLabs\Enum\Enum $value */
-                    $enumValue = $value->getValue();
-                    $this->castTypeIfExist($enumValue, $attribute);
-                    $this->owner->$attribute = $enumValue;
-                }
+            if ($value instanceof $enum) {
+                /** @var \MyCLabs\Enum\Enum $value */
+                $enumValue = $value->getValue();
+                $this->castTypeIfExist($enumValue, $attribute);
+                $this->owner->$attribute = $enumValue;
             }
         }
     }
 
     /**
      * @throws base\InvalidConfigException
+     * @throws \UnexpectedValueException
      */
     public function toEnums(): void
     {
         $this->validateAttributes();
 
-        $fetchedAttributesEnums = $this->fetchAttributes();
+        foreach ($this->map as $attribute => $enum) {
+            $value = $this->owner->$attribute;
 
-        foreach ($fetchedAttributesEnums as $enum => $attributes) {
-            foreach ($attributes as $attribute => $value) {
-                if (!$value instanceof Enum) {
-                    $this->castTypeIfExist($value, $attribute);
-                    $this->owner->$attribute = new $enum($value);
-                }
+            if (!$value instanceof Enum) {
+                $this->castTypeIfExist($value, $attribute);
+                $this->owner->$attribute = new $enum($value);
             }
         }
     }
 
-    protected function fetchAttributes(): array
-    {
-        $attributes = [];
-
-        foreach ($this->enumsAttributes as $enum => $attrs) {
-            foreach ($attrs as $attribute) {
-                $attributes[$enum][$attribute] = $this->owner->$attribute;
-            }
-        }
-
-        return $attributes;
-    }
-
-    public function castTypeIfExist(?string &$variable, string $attribute): void
+    protected function castTypeIfExist(?string &$variable, string $attribute): void
     {
         if (isset($this->attributesType[$attribute])) {
             settype($variable, $this->attributesType[$attribute]);
@@ -156,12 +134,9 @@ class EnumMappingBehavior extends base\Behavior
      */
     protected function validateAttributes(): void
     {
-        foreach ($this->enumsAttributes as $enum => $attribute) {
+        foreach ($this->map as $attribute => $enum) {
             if (!\class_exists($enum) || !\in_array(Enum::class, \class_parents($enum), true)) {
                 throw new base\InvalidConfigException("Class [$enum] must exist and implement " . Enum::class);
-            }
-            if (!\is_array($attribute)) {
-                $this->enumsAttributes[$enum] = [$attribute];
             }
         }
     }

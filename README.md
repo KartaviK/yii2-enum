@@ -56,11 +56,9 @@ class Record extends \yii\db\ActiveRecord
         return [
             'enum' => [
                 'class' => Yii2\Behaviors\EnumMappingBehavior::class,
-                'enumsAttributes' => [
-                    YourEnum::class => [
-                        'attribute1',
-                        'attribute2',
-                    ]
+                'map' => [
+                    'attribute1' => YourEnum::class,
+                    'attribute2' => YourEnum::class,
                 ],
                 // Set attribute type if need explicitly specify it
                 'attributesType' => [
@@ -112,11 +110,9 @@ class Record extends \yii\db\ActiveRecord
         return [
             'enum' => [
                 'class' => \Kartavik\Yii2\Behaviors\EnumMappingBehavior::class,
-                'enumsAttributes' => [
-                    YourEnum::class => [
-                        'attribute1',
-                        'attribute2',
-                    ]
+                'map' => [
+                    'attribute1' => YourEnum::class,
+                    'attribute2' => YourEnum::class,
                 ]
             ]
         ];

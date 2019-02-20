@@ -22,11 +22,9 @@ class Model extends base\Model
         return [
             'enum' => [
                 'class' => Yii2\Behaviors\EnumMappingBehavior::class,
-                'enumsAttributes' => [
-                    TestEnum::class => [
-                        'first',
-                        'second'
-                    ],
+                'map' => [
+                    'first' => TestEnum::class,
+                    'second' => TestEnum::class,
                 ],
             ],
         ];

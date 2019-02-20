@@ -108,10 +108,8 @@ class EnumBehaviorTest extends TestCase
                 return [
                     'enum' => [
                         'class' => EnumMappingBehavior::class,
-                        'enumsAttributes' => [
-                            'invalidEnumClass' => [
-                                'value',
-                            ]
+                        'map' => [
+                            'value' => 'invalidEnumClass',
                         ]
                     ]
                 ];

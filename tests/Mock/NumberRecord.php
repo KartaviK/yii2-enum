@@ -25,11 +25,9 @@ class NumberRecord extends db\ActiveRecord
         return [
             'enum' => [
                 'class' => Yii2\Behaviors\EnumMappingBehavior::class,
-                'enumsAttributes' => [
-                    NumericEnum::class => [
-                        'first',
-                        'second',
-                    ],
+                'map' => [
+                    'first' => NumericEnum::class,
+                    'second' => NumericEnum::class,
                 ],
                 'attributesType' => [
                     'first' => 'integer',

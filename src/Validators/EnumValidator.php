@@ -39,11 +39,11 @@ class EnumValidator extends validators\Validator
     {
         $value = $model->$attribute;
 
-        if ($value instanceof $this->targetEnum) {
+        if ($value instanceof $this->targetEnum || $this->targetEnum::isValid($value)) {
             return true;
         }
 
-        $model->addError($attribute, "Attribute [{$attribute}] must be instance {$this->targetEnum}");
+        $model->addError($attribute, "Attribute [{$attribute}] must be instance or be part of {$this->targetEnum}");
 
         return false;
     }

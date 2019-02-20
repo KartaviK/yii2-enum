@@ -30,18 +30,11 @@ class Record extends db\ActiveRecord
         return [
             'enum' => [
                 'class' => Yii2\Behaviors\EnumMappingBehavior::class,
-                'enumsAttributes' => [
-                    TestEnum::class => [
-                        'first',
-                    ],
+                'map' => [
+                    'first' => TestEnum::class,
+                    'second' => TestEnum::class
                 ],
             ],
-            'enum2' => [
-                'class' => Yii2\Behaviors\EnumMappingBehavior::class,
-                'enumsAttributes' => [
-                    TestEnum::class => 'second',
-                ]
-            ]
         ];
     }
 

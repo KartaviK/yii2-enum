@@ -60,6 +60,21 @@ class EnumMappingBehavior extends base\Behavior
      */
     public $enumsAttributes;
 
+    /**
+     * In some cases database enum type can work only with string, so this parameter help behaviour to cast variable to
+     * needs type
+     *
+     * ```php
+     * [
+     *      'attribute1' => 'integer',
+     *      'attribute2' => 'float',
+     * ]
+     * ```
+     *
+     * @var array
+     */
+    public $attributesType = [];
+
     public function events(): array
     {
         return [
@@ -85,7 +100,9 @@ class EnumMappingBehavior extends base\Behavior
             foreach ($attributes as $attribute => $value) {
                 if ($value instanceof $enum) {
                     /** @var \MyCLabs\Enum\Enum $value */
-                    $this->owner->$attribute = $value->getValue();
+                    $enumValue = $value->getValue();
+                    $this->castTypeIfExist($enumValue, $attribute);
+                    $this->owner->$attribute = $enumValue;
                 }
             }
         }
@@ -103,6 +120,7 @@ class EnumMappingBehavior extends base\Behavior
         foreach ($fetchedAttributesEnums as $enum => $attributes) {
             foreach ($attributes as $attribute => $value) {
                 if (!$value instanceof Enum) {
+                    $this->castTypeIfExist($value, $attribute);
                     $this->owner->$attribute = new $enum($value);
                 }
             }
@@ -120,6 +138,13 @@ class EnumMappingBehavior extends base\Behavior
         }
 
         return $attributes;
+    }
+
+    public function castTypeIfExist(?string &$variable, string $attribute): void
+    {
+        if (isset($this->attributesType[$attribute])) {
+            settype($variable, $this->attributesType[$attribute]);
+        }
     }
 
     /**

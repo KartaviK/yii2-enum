@@ -14,7 +14,7 @@ class M190129183210CreateRecordTable extends Migration
      */
     public function safeUp()
     {
-        $this->execute("CREATE TYPE test_enum as ENUM ('first', 'second', 'third')");
+        $this->execute("CREATE TYPE test_enum as ENUM ('first', 'second', 'third', '123', '123.456')");
         $this->createTable('record', [
             'id' => $this->primaryKey(),
             'first' => 'test_enum',

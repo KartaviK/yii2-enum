@@ -148,4 +148,43 @@ class EnumBehaviorTest extends TestCase
         $this->assertEquals(Mock\TestEnum::FIRST(), $record->first);
         $this->assertEquals(Mock\TestEnum::SECOND(), $record->second);
     }
+
+    public function testCastNumbers(): void
+    {
+        $record = new Mock\NumberRecord([
+            'first' => Mock\NumericEnum::NUMERIC(),
+            'second' => Mock\NumericEnum::REAL(),
+        ]);
+
+        $this->assertEquals(Mock\NumericEnum::NUMERIC(), $record->first);
+        $this->assertEquals(Mock\NumericEnum::REAL(), $record->second);
+
+        $record->trigger(EnumMappingBehavior::EVENT_TO_VALUES);
+
+        $this->assertEquals(Mock\NumericEnum::NUMERIC, $record->first);
+        $this->assertEquals(Mock\NumericEnum::REAL, $record->second);
+
+        $this->assertIsInt($record->first);
+        $this->assertIsFloat($record->second);
+
+        $record->trigger(EnumMappingBehavior::EVENT_TO_ENUMS);
+
+        $this->assertEquals(Mock\NumericEnum::NUMERIC(), $record->first);
+        $this->assertEquals(Mock\NumericEnum::REAL(), $record->second);
+
+        $this->assertTrue($record->save());
+
+        $find = Mock\NumberRecord::find()->andWhere(['id' => $record->id])->all()[0];
+
+        $this->assertEquals(Mock\NumericEnum::NUMERIC(), $find->first);
+        $this->assertEquals(Mock\NumericEnum::REAL(), $find->second);
+
+        $find->trigger(EnumMappingBehavior::EVENT_TO_VALUES);
+
+        $this->assertEquals(Mock\NumericEnum::NUMERIC, $find->first);
+        $this->assertEquals(Mock\NumericEnum::REAL, $find->second);
+
+        $this->assertIsInt($find->first);
+        $this->assertIsFloat($find->second);
+    }
 }

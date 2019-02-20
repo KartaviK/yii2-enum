@@ -3,7 +3,7 @@
     "description": "Yii2 enum mapping behavior / validator",
     "type": "library",
     "require": {
-        "myclabs/php-enum": "^1.6",
+        "myclabs/php-enum": "^1.6.6",
         "yiisoft/yii2": "^2.0.13.1"
     },
     "license": "MIT",

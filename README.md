@@ -48,7 +48,12 @@ class Record extends \yii\db\ActiveRecord
                         'attribute1',
                         'attribute2',
                     ]
-                ]
+                ],
+                // Set attribute type if need explicitly specify it
+                'attributesType' => [
+                    'attribute1' => 'integer',
+                    'attribute2' => 'float'
+                ],
             ]
         ];
     }

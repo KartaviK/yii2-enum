@@ -3,7 +3,7 @@
  * @author Roman Varkuta <roman.varkuta@gmail.com>
  * @license MIT
  * @see https://github.com/myclabs/php-enum
- * @version 1.0
+ * @version 1.1
  */
 
 namespace Kartavik\Yii2\Behaviors;
@@ -34,6 +34,7 @@ use yii\db;
  * ```
  *
  * @package Kartavik\Yii2\Behaviors
+ * @since 1.0
  */
 class EnumMappingBehavior extends base\Behavior
 {
@@ -57,6 +58,7 @@ class EnumMappingBehavior extends base\Behavior
      * ```
      *
      * @var array
+     * @since 1.0
      */
     public $enumsAttributes;
 
@@ -72,6 +74,7 @@ class EnumMappingBehavior extends base\Behavior
      * ```
      *
      * @var array
+     * @since 1.1
      */
     public $attributesType = [];
 
@@ -82,6 +85,7 @@ class EnumMappingBehavior extends base\Behavior
             EnumMappingBehavior::EVENT_TO_VALUES => 'toValues',
             db\ActiveRecord::EVENT_AFTER_FIND => 'toEnums',
             db\ActiveRecord::EVENT_AFTER_INSERT => 'toEnums',
+            db\ActiveRecord::EVENT_AFTER_UPDATE => 'toEnums',
             db\ActiveRecord::EVENT_BEFORE_INSERT => 'toValues',
             db\ActiveRecord::EVENT_BEFORE_UPDATE => 'toValues'
         ];

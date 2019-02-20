@@ -28,6 +28,7 @@ use yii\validators;
  * ```
  *
  * @package Kartavik\Yii2\Validators
+ * @since 1.0
  */
 class EnumValidator extends validators\Validator
 {

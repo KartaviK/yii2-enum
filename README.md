@@ -1,5 +1,8 @@
 # Yii2 enum
 
+[![Build Status](https://travis-ci.com/KartaviK/yii2-enum.svg?branch=master)](https://travis-ci.com/KartaviK/yii2-enum)
+[![codecov](https://codecov.io/gh/KartaviK/yii2-enum/branch/master/graph/badge.svg)](https://codecov.io/gh/KartaviK/yii2-enum)
+
 Based on [myclabs\php-enum](https://github.com/myclabs/php-enum) package;
 
 ## Installation

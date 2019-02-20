@@ -34,6 +34,8 @@ class M190129183210CreateRecordTable extends Migration
     public function safeDown()
     {
         $this->dropTable('record');
-        $this->execute('DROP TYPE test_enum');
+        if ($this->getDb()->getDriverName() === 'pgsql') {
+            $this->execute('DROP TYPE test_enum');
+        }
     }
 }

@@ -14,11 +14,17 @@ class M190129183210CreateRecordTable extends Migration
      */
     public function safeUp()
     {
-        $this->execute("CREATE TYPE test_enum as ENUM ('first', 'second', 'third', '123', '123.456')");
+        if ($this->getDb()->getDriverName() === 'pgsql') {
+            $this->execute("CREATE TYPE test_enum as ENUM ('first', 'second', 'third', '123', '123.456')");
+            $enum = 'test_enum';
+        } else {
+            $enum = "ENUM ('first', 'second', 'third', '123', '123.456')";
+        }
+
         $this->createTable('record', [
             'id' => $this->primaryKey(),
-            'first' => 'test_enum',
-            'second' => 'test_enum',
+            'first' => $enum,
+            'second' => $enum,
         ]);
     }
 
@@ -28,6 +34,8 @@ class M190129183210CreateRecordTable extends Migration
     public function safeDown()
     {
         $this->dropTable('record');
-        $this->execute('DROP TYPE test_enum');
+        if ($this->getDb()->getDriverName() === 'pgsql') {
+            $this->execute('DROP TYPE test_enum');
+        }
     }
 }

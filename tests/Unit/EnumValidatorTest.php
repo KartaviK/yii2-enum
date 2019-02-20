@@ -14,7 +14,7 @@ class EnumValidatorTest extends TestCase
     {
         $model = new Mock\Model([
             'first' => Mock\TestEnum::FIRST(),
-            'second' => Mock\TestEnum::SECOND(),
+            'second' => Mock\TestEnum::SECOND,
         ]);
 
         $this->assertTrue($model->validate());

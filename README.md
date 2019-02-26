@@ -3,7 +3,7 @@
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
     </a>
-    <h1 align="center">MyCLabs\Enum integration for Yii Framework 2.0</h1>
+    <h1 align="center">Enum integration for Yii Framework 2.0</h1>
     <br>
 </p>
 

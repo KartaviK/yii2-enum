@@ -29,15 +29,12 @@ trait MigrationTrait
 
         $enums = $this->formatEnumValues($enums);
 
-        $transaction = $this->getDb()->beginTransaction();
-        $command = $transaction->db->createCommand("CREATE TYPE $name AS $enums");
         try {
-            echo "    > create type $name ... ";
-            $command->execute();
+            echo "    > create type $name $enums ... ";
+            $this->getDb()->createCommand("CREATE TYPE $name AS $enums")->execute();
             echo 'done';
         } catch (\Exception $exception) {
             echo "already exist, skipping";
-            $transaction->rollBack();
         }
         echo PHP_EOL;
     }

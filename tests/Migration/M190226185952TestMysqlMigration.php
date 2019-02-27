@@ -13,7 +13,7 @@ class M190226185952TestMysqlMigration extends Mysql\Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         if ($this->getDb()->getDriverName() === 'mysql') {
             $this->createTable('test_table', [
@@ -26,7 +26,7 @@ class M190226185952TestMysqlMigration extends Mysql\Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         if ($this->getDb()->getDriverName() === 'mysql') {
             $this->dropTable('test_table');

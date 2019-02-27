@@ -13,7 +13,7 @@ class M190226122848TestPgsqlMigration extends Pgsql\Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         if ($this->getDb()->getDriverName() === 'pgsql') {
             $this->addEnum('my_enum_type_created_from_array', ['first', 'second', 'third']);
@@ -41,7 +41,7 @@ class M190226122848TestPgsqlMigration extends Pgsql\Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         if ($this->getDb()->getDriverName() === 'pgsql') {
             $this->dropTable('test_table');

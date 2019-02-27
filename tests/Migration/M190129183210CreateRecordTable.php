@@ -12,7 +12,7 @@ class M190129183210CreateRecordTable extends Migration
     /**
      * @inheritdoc
      */
-    public function safeUp()
+    public function up()
     {
         if ($this->getDb()->getDriverName() === 'pgsql') {
             $this->execute("CREATE TYPE test_enum as ENUM ('first', 'second', 'third', '123', '123.456')");
@@ -31,7 +31,7 @@ class M190129183210CreateRecordTable extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('record');
         if ($this->getDb()->getDriverName() === 'pgsql') {

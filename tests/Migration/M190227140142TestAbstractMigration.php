@@ -13,7 +13,7 @@ class M190227140142TestAbstractMigration extends Database\Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
         $this->createTable('test_table_for_asbtract_migration', [
             'enum_from_array' => $this->enum(['1', '2', '3'], 'test_name_enum'),
@@ -24,7 +24,7 @@ class M190227140142TestAbstractMigration extends Database\Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('test_table_for_asbtract_migration');
     }

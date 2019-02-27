@@ -4,6 +4,8 @@ namespace Kartavik\Yii2\Database;
 
 use yii\db\ColumnSchemaBuilder;
 use yii\db\Exception;
+use Kartavik\Yii2\Database\Pgsql\MigrationTrait as PgsqlMigration;
+use Kartavik\Yii2\Database\Mysql\MigrationTrait as MysqlMigration;
 
 /**
  * Class Migration
@@ -11,9 +13,10 @@ use yii\db\Exception;
  */
 abstract class Migration extends \yii\db\Migration
 {
-    use Pgsql\MigrationTrait, Mysql\MigrationTrait {
-        Pgsql\MigrationTrait::enum as protected pgsqlEnum;
-        Mysql\MigrationTrait::enum as protected mysqlEnum;
+    use PgsqlMigration, MysqlMigration {
+        MysqlMigration::convertEnums insteadof PgsqlMigration;
+        PgsqlMigration::enum as protected pgsqlEnum;
+        MysqlMigration::enum as protected mysqlEnum;
     }
 
     /**

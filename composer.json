@@ -54,7 +54,11 @@
         "lint": "phpcs --standard=PSR2 ./src ./tests",
         "phpcbf": "phpcbf --standard=PSR2 ./src ./tests",
         "cover": "phpunit --coverage-clover=coverage.xml",
-        "test": "phpunit"
+        "test": "phpunit",
+        "build": [
+            "@lint",
+            "@cover"
+        ]
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5",

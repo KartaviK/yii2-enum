@@ -24,8 +24,7 @@ before_script:
   - sh -c "if [ '$DB_TYPE' = 'mysql' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'; fi"
 
 script:
-  - composer lint
-  - travis_retry composer cover
+  - travis_retry composer build
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

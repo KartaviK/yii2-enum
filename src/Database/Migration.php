@@ -15,6 +15,7 @@ abstract class Migration extends \yii\db\Migration
 {
     use PgsqlMigration, MysqlMigration {
         MysqlMigration::convertEnums insteadof PgsqlMigration;
+        MysqlMigration::formatEnumValues insteadof PgsqlMigration;
         PgsqlMigration::enum as protected pgsqlEnum;
         MysqlMigration::enum as protected mysqlEnum;
     }

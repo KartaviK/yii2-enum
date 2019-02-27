@@ -35,7 +35,7 @@ class YourEnum extends \MyCLabs\Enum\Enum
 }
 ```
 
-## Validator
+### Validator
 
 This validator used `MyCLabs\Enum\Enum::isValid($value)` method and also checked value on instance of your enum;
 
@@ -136,6 +136,67 @@ Record::updateAll(['attribute1' => YourEnum::SECOND_VALUE()]); // Updating recor
 $record = Record::find()->where(['id' => $record->id])->all()[0];
 
 print_r($record->attribute1); // Will output YourEnum object with value `second`
+```
+
+### Migration
+
+#### PgSql
+
+```php
+<?php
+
+use Kartavik\Yii2\Database\Pgsql;
+
+class CreateRecordTable extends Pgsql\Migration
+{
+    // You can use trait do receive all methods for enum
+    use Pgsql\MigrationTrait;
+    
+    public function safeUp()
+    {
+         // simple usage
+        $this->addEnum('test_enum_from_array', [/** your values */]);
+         // use your enum that extends MyCLabs\Enum\Enum
+         // use it for package, for big project this usage is not good practice
+        $this->addEnum('test_enum_from_enum', YourEnum::class);
+        
+         // if enum already exists
+        $column = $this->enum('test_enum_from_array');
+         // you can do not to use addEnum to create it
+        $column = $this->enum('test_enum_dynamic_from_array', [/** your values */]);
+         // use your enum that extends MyCLabs\Enum\Enum
+         // use it for package, for big project this usage is not good practice
+        $column = $this->enum('test_enum_dynamic_from_enum', YourEnum::class);
+        
+        $this->createTable('record', [
+            'enum' => $column->null()->default('default')
+        ]);
+    }
+}
+```
+
+#### MySql
+
+```php
+<?php
+
+use Kartavik\Yii2\Database\Mysql;
+
+class CreateRecordTable extends Mysql\Migration
+{
+    // You can use trait do receive all methods for enum
+    use Mysql\MigrationTrait;
+    
+    public function safeUp()
+    {
+        $this->createTable('record', [
+            'enum_column_from_array' => $this->enum(['1', '2', '3', '4']),
+            // use your enum that extends MyCLabs\Enum\Enum
+            // use it for package, for big project this usage is not good practice
+            'enum_column_from_enum' => $this->enum(YourEnum::class),
+        ]);
+    }
+}
 ```
 
 ## Suggest

@@ -1,8 +1,9 @@
 {
     "name": "kartavik/yii2-enum",
-    "description": "Yii2 enum mapping behavior / validator",
+    "description": "Yii2 enum mapping behavior / validator / database column type",
     "type": "library",
     "require": {
+        "php": "^7.1",
         "myclabs/php-enum": "^1.6.6",
         "yiisoft/yii2": "^2.0.13.1"
     },
@@ -10,20 +11,21 @@
     "authors": [
         {
             "name": "Roman Varkuta",
-            "email": "roman.varkuta@gmail.com"
+            "email": "roman.varkuta@gmail.com",
+            "role": "Developer"
         }
     ],
     "keywords": [
         "yii2",
         "enum",
-        "yii2 enum",
         "validator",
-        "yii2 enum validator",
-        "map",
         "mapping",
-        "yii2 enum map",
-        "yii2 enum mapping",
-        "yii2 enum behavior"
+        "behavior",
+        "migration",
+        "type",
+        "mysql",
+        "pgsql",
+        "column"
     ],
     "minimum-stability": "stable",
     "autoload": {

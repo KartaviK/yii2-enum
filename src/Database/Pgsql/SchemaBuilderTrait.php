@@ -22,7 +22,6 @@ trait SchemaBuilderTrait
      *
      * @return ColumnSchemaBuilder
      * @throws \yii\base\NotSupportedException
-     * @throws \yii\db\Exception
      */
     public function enum(string $name, $values = null): ColumnSchemaBuilder
     {

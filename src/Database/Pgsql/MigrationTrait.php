@@ -30,7 +30,7 @@ trait MigrationTrait
         $enums = $this->formatEnumValues($enums);
 
         $transaction = $this->getDb()->beginTransaction();
-        $command = $transaction->db->createCommand("CREATE TYPE $name AS ENUM ($enums)");
+        $command = $transaction->db->createCommand("CREATE TYPE $name AS $enums");
         try {
             echo "    > create type $name ... ";
             $command->execute();

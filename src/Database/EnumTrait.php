@@ -27,7 +27,7 @@ trait EnumTrait
 
     private function formatEnumValues(array $values): string
     {
-        return \implode(
+        $values = \implode(
             ', ',
             \array_map(
                 function ($value) {
@@ -43,5 +43,7 @@ trait EnumTrait
                 )
             )
         );
+
+        return "ENUM({$values})";
     }
 }

@@ -27,7 +27,9 @@ trait SchemaBuilderTrait
         return $this->getDb()
             ->getSchema()
             ->createColumnSchemaBuilder(
-                " ENUM({$this->formatEnumValues($this->convertEnums($values))} "
+                $this->formatEnumValues(
+                    $this->convertEnums($values)
+                )
             );
     }
 }

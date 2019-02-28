@@ -72,6 +72,19 @@ class EnumMappingBehavior extends base\Behavior
      */
     public $attributesType = [];
 
+    /**
+     * If you want use keys for mapping just add it to this property
+     *
+     * ```php
+     * [
+     *      'attribute1',
+     * ]
+     * ```
+     *
+     * @var array
+     */
+    public $useKeyFor = [];
+
     public function events(): array
     {
         return [
@@ -97,7 +110,7 @@ class EnumMappingBehavior extends base\Behavior
 
             if ($value instanceof $enum) {
                 /** @var \MyCLabs\Enum\Enum $value */
-                $enumValue = $value->getValue();
+                $enumValue = $this->isUseKey($attribute) ? $value->getKey() : $value->getValue();
                 $this->castTypeIfExist($enumValue, $attribute);
                 $this->owner->$attribute = $enumValue;
             }
@@ -117,7 +130,9 @@ class EnumMappingBehavior extends base\Behavior
 
             if (!$value instanceof Enum) {
                 $this->castTypeIfExist($value, $attribute);
-                $this->owner->$attribute = new $enum($value);
+                $this->owner->$attribute = isset($this->owner->$attribute) && $this->isUseKey($attribute)
+                    ? \call_user_func([$enum, $value])
+                    : new $enum($value);
             }
         }
     }
@@ -139,5 +154,10 @@ class EnumMappingBehavior extends base\Behavior
                 throw new base\InvalidConfigException("Class [$enum] must exist and implement " . Enum::class);
             }
         }
+    }
+
+    protected function isUseKey(string $attribute): bool
+    {
+        return isset(array_flip($this->useKeyFor)[$attribute]);
     }
 }

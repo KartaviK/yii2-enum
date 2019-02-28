@@ -12,6 +12,7 @@ use yii\db;
  * @property int $id
  * @property TestEnum $first
  * @property TestEnum $second
+ * @property TestEnum $third
  */
 class NumberRecord extends db\ActiveRecord
 {
@@ -28,10 +29,14 @@ class NumberRecord extends db\ActiveRecord
                 'map' => [
                     'first' => NumericEnum::class,
                     'second' => NumericEnum::class,
+                    'third' => TestEnum::class
                 ],
                 'attributesType' => [
                     'first' => 'integer',
                     'second' => 'float'
+                ],
+                'useKeyFor' => [
+                    'third'
                 ]
             ],
         ];
@@ -44,6 +49,11 @@ class NumberRecord extends db\ActiveRecord
                 ['first', 'second'],
                 Yii2\Validators\EnumValidator::class,
                 'targetEnum' => NumericEnum::class,
+            ],
+            [
+                ['third'],
+                Yii2\Validators\EnumValidator::class,
+                'targetEnum' => TestEnum::class,
             ]
         ];
     }

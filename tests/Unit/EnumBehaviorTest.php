@@ -185,4 +185,51 @@ class EnumBehaviorTest extends TestCase
         $this->assertIsInt($find->first);
         $this->assertIsFloat($find->second);
     }
+
+    public function testUseKey(): void
+    {
+        $record = new Mock\NumberRecord([
+            'first' => Mock\NumericEnum::NUMERIC(),
+            'second' => Mock\NumericEnum::REAL(),
+            'third' => Mock\TestEnum::SECOND(),
+        ]);
+
+        $this->assertEquals(Mock\NumericEnum::NUMERIC(), $record->first);
+        $this->assertEquals(Mock\NumericEnum::REAL(), $record->second);
+        $this->assertEquals(Mock\TestEnum::SECOND(), $record->third);
+
+        $record->trigger(EnumMappingBehavior::EVENT_TO_VALUES);
+
+        $this->assertEquals(Mock\NumericEnum::NUMERIC, $record->first);
+        $this->assertEquals(Mock\NumericEnum::REAL, $record->second);
+        $this->assertEquals(Mock\TestEnum::SECOND()->getKey(), $record->third);
+
+        $this->assertIsInt($record->first);
+        $this->assertIsFloat($record->second);
+        $this->assertIsString($record->third);
+
+        $record->trigger(EnumMappingBehavior::EVENT_TO_ENUMS);
+
+        $this->assertEquals(Mock\NumericEnum::NUMERIC(), $record->first);
+        $this->assertEquals(Mock\NumericEnum::REAL(), $record->second);
+        $this->assertEquals(Mock\TestEnum::SECOND(), $record->third);
+
+        $this->assertTrue($record->save());
+
+        $find = Mock\NumberRecord::find()->andWhere(['id' => $record->id])->all()[0];
+
+        $this->assertEquals(Mock\NumericEnum::NUMERIC(), $find->first);
+        $this->assertEquals(Mock\NumericEnum::REAL(), $find->second);
+        $this->assertEquals(Mock\TestEnum::SECOND(), $find->third);
+
+        $find->trigger(EnumMappingBehavior::EVENT_TO_VALUES);
+
+        $this->assertEquals(Mock\NumericEnum::NUMERIC, $find->first);
+        $this->assertEquals(Mock\NumericEnum::REAL, $find->second);
+        $this->assertEquals(Mock\TestEnum::SECOND()->getKey(), $find->third);
+
+        $this->assertIsInt($find->first);
+        $this->assertIsFloat($find->second);
+        $this->assertIsString($find->third);
+    }
 }

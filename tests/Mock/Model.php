@@ -17,6 +17,8 @@ class Model extends base\Model
     /** @var TestEnum */
     public $second;
 
+    public $third;
+
     public function behaviors(): array
     {
         return [
@@ -25,7 +27,11 @@ class Model extends base\Model
                 'map' => [
                     'first' => TestEnum::class,
                     'second' => TestEnum::class,
+                    'third' => TestEnum::class,
                 ],
+                'useKeyFor' => [
+                    'third',
+                ]
             ],
         ];
     }
@@ -38,6 +44,12 @@ class Model extends base\Model
                 ['first', 'second'],
                 Yii2\Validators\EnumValidator::class,
                 'targetEnum' => TestEnum::class,
+            ],
+            [
+                'third',
+                Yii2\Validators\EnumValidator::class,
+                'targetEnum' => TestEnum::class,
+                'useKey' => true
             ]
         ];
     }

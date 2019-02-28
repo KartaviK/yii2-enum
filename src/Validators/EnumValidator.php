@@ -35,11 +35,20 @@ class EnumValidator extends validators\Validator
     /** @var string|Enum */
     public $targetEnum;
 
+    /** @var bool */
+    public $useKey = false;
+
     public function validateAttribute($model, $attribute): bool
     {
         $value = $model->$attribute;
 
-        if ($value instanceof $this->targetEnum || $this->targetEnum::isValid($value)) {
+        if ($value instanceof $this->targetEnum) {
+            return true;
+        }
+
+        if ($this->useKey && $this->targetEnum::isValidKey($value)) {
+            return true;
+        } elseif ($this->targetEnum::isValid($value)) {
             return true;
         }
 

@@ -73,11 +73,11 @@ class EnumMappingBehavior extends base\Behavior
     public $attributesType = [];
 
     /**
-     * If you want use keys for mapping just add it to this property
+     * If you want use keys for mapping just add related attribute to this property
      *
      * ```php
      * [
-     *      'attribute1',
+     *      'attribute1', // values for this attrbiute will be as key in enum
      * ]
      * ```
      *

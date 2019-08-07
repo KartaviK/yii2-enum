@@ -15,7 +15,7 @@ class M190226185952TestMysqlMigration extends Mysql\Migration
      */
     public function safeUp()
     {
-        if ($this->getDb()->getDriverName() === 'mysql') {
+        if ($this->getDb()->getDriverName() === 'mysql' && getenv('DB_TYPE') !== 'mariadb') {
             $this->createTable('test_table', [
                 'enum_column_from_array' => $this->enum(['1', '2', '3', '4']),
                 'enum_column_from_enum' => $this->enum(TestEnum::class)
@@ -28,7 +28,7 @@ class M190226185952TestMysqlMigration extends Mysql\Migration
      */
     public function safeDown()
     {
-        if ($this->getDb()->getDriverName() === 'mysql') {
+        if ($this->getDb()->getDriverName() === 'mysql' && getenv('DB_TYPE') !== 'mariadb') {
             $this->dropTable('test_table');
         }
     }

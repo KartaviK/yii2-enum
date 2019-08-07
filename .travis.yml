@@ -3,11 +3,16 @@ language: php
 services:
   - postgresql
   - mysql
+  - mariadb
 
 php:
   - 7.1
   - 7.2
   - 7.3
+  - 7.4snapshot
+
+addons:
+  mariadb: '10.0'
 
 cache:
   directories:
@@ -16,12 +21,14 @@ cache:
 env:
   - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
   - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+  - DB_TYPE=mariadb DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
 
 before_script:
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --prefer-source
   - sh -c "if [ '$DB_TYPE' = 'pgsql' ]; then psql -c 'CREATE DATABASE yii2_enum;' -U postgres; fi"
   - sh -c "if [ '$DB_TYPE' = 'mysql' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'; fi"
+  - sh -c "if [ '$DB_TYPE' = 'mariadb' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'; fi"
 
 script:
   - travis_retry composer build

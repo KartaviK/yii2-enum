@@ -15,6 +15,11 @@
 
 Based on [myclabs\php-enum](https://github.com/myclabs/php-enum) package;
 
+## Databases support
+- PostgreSQL
+- MySQL
+- MariaDB
+
 ## Installation
 
 ```bash
@@ -28,7 +33,9 @@ Example enum:
 ```php
 <?php
 
-class YourEnum extends \MyCLabs\Enum\Enum
+use MyCLabs\Enum\Enum;
+
+class YourEnum extends Enum
 {
     public const FIRST_VALUE = 'first';
     public const SECOND_VALUE = 'second';
@@ -39,17 +46,74 @@ class YourEnum extends \MyCLabs\Enum\Enum
 
 This validator used `MyCLabs\Enum\Enum::isValid($value)` method and also checked value on instance of your enum;
 
+#### ActiveRecord configuration
+
 ```php
 <?php
 
 use YourEnum;
 use Kartavik\Yii2;
+use yii\db;
 
 /**
  * @property YourEnum $attribute1
  * @property YourEnum $attribute2
  */
-class Record extends \yii\db\ActiveRecord
+class Record extends db\ActiveRecord
+{
+    public function rules(): array
+    {
+        return [
+            [
+                ['attribute1', 'attribute2'],
+                Yii2\Validators\EnumValidator::class,
+                'targetEnum' => YourEnum::class,
+            ],
+            // Another variant, if you want use classic range validation
+            [
+                ['attribute1', 'attribute2'],
+                'in',
+                'range' => YourEnum::toArray(),
+            ]
+        ];
+    }
+}
+
+```
+
+#### Usage example
+
+```php
+use Kartavik\Yii2;
+
+$record = new Record([
+    'attribute1' => YourEnum::FIRST_VALUE, // use constant
+    'attribute2' => YourEnum::SECOND_VALUE(), // use method
+]);
+
+$record->trigger(Yii2\Behaviors\EnumMappingBehavior::EVENT_TO_ENUMS); // trigger if you put values not instance of Enum
+
+$record->validate(); // true
+```
+
+### Behavior
+
+It can be used for classes that extends ActiveRecord
+
+#### ActiveRecord configuration
+
+```php
+<?php
+
+use YourEnum;
+use Kartavik\Yii2;
+use yii\db;
+
+/**
+ * @property YourEnum $attribute1
+ * @property YourEnum $attribute2
+ */
+class Record extends db\ActiveRecord
 {
     public function behaviors(): array
     {
@@ -68,74 +132,36 @@ class Record extends \yii\db\ActiveRecord
             ]
         ];
     }
-    
-    public function rules(){
-        return [
-            [
-                ['attribute1', 'attribute2'],
-                Yii2\Validators\EnumValidator::class,
-                'targetEnum' => YourEnum::class,
-            ]
-        ];
-    }
 }
 
-$record = new Record([
-    'attribute1' => YourEnum::FIRST_VALUE, // use constant
-    'attribute2' => YourEnum::SECOND_VALUE(), // use method
-]);
-
-$record->trigger(Yii2\Behaviors\EnumMappingBehavior::EVENT_TO_ENUMS); // trigger if you put values not instance of Enum
-
-$record->validate(); // will return true
 ```
 
-### Behavior
-
-It can be used for classes that extends ActiveRecord
+#### Usage example
 
 ```php
-<?php
-
-use YourEnum;
-
-/**
- * @property YourEnum $attribute1
- * @property YourEnum $attribute2
- */
-class Record extends \yii\db\ActiveRecord
-{
-    public function behaviors(): array
-    {
-        return [
-            'enum' => [
-                'class' => \Kartavik\Yii2\Behaviors\EnumMappingBehavior::class,
-                'map' => [
-                    'attribute1' => YourEnum::class,
-                    'attribute2' => YourEnum::class,
-                ]
-            ]
-        ];
-    }
-}
+use Kartavik\Yii2;
 
 $record = new Record([
     'attribute1' => YourEnum::FIRST_VALUE, // use const
     'attribute2' => YourEnum::SECOND_VALUE() // use method
 ]);
 
-$this->trigger(\Kartavik\Yii2\Behaviors\EnumMappingBehavior::EVENT_TO_ENUMS);
+$this->trigger(Yii2\Behaviors\EnumMappingBehavior::EVENT_TO_ENUMS);
 $record->save(); // will return true
 
-$record = Record::find()->where(['id' => $record->id])->all()[0];
+$value = Record::find()
+    ->where(['id' => $record->id])
+    ->all()[0]
+    ->attribute1; // Will contain YourEnum object with value `first`
 
-print_r($record->attribute1); // Will output YourEnum object with value `first`
+Record::updateAll([
+    'attribute1' => YourEnum::SECOND_VALUE()
+]); // Updating records with new enum
 
-Record::updateAll(['attribute1' => YourEnum::SECOND_VALUE()]); // Updating records with new enum
-
-$record = Record::find()->where(['id' => $record->id])->all()[0];
-
-print_r($record->attribute1); // Will output YourEnum object with value `second`
+$value = Record::find()
+    ->where(['id' => $record->id])
+    ->all()[0]
+    ->attribute1; // Will containt YourEnum object with value `second`
 ```
 
 ### Migration
@@ -199,10 +225,35 @@ class CreateRecordTable extends Mysql\Migration
 }
 ```
 
+#### MariaDB
+
+```php
+<?php
+
+use Kartavik\Yii2\Database\Mariadb;
+
+class CreateRecordTable extends Mariadb\Migration
+{
+    // You can use trait do receive all methods for enum
+    use Mariadb\MigrationTrait;
+    
+    public function safeUp()
+    {
+        $this->createTable('record', [
+            'enum_column_from_array' => $this->enum(['1', '2', '3', '4']),
+            // use your enum that extends MyCLabs\Enum\Enum
+            // use it for package, for big project this usage is not good practice
+            'enum_column_from_enum' => $this->enum(YourEnum::class),
+        ]);
+    }
+}
+```
+
 ## Suggest
 - [horat1us/yii2-base](https://github.com/Horat1us/yii2-base)
  ([ConstRangeValidator](https://github.com/Horat1us/yii2-base/blob/master/src/Validators/ConstRangeValidator.php))- 
  if you need better validation for ranges of constants.
+- [sam-it/yii2-mariadb](https://github.com/SAM-IT/yii2-mariadb) - For better MariaDB support
 
 ## Author
 - [Roman Varkuta](mailto:roman.varkuta@gmail.com)

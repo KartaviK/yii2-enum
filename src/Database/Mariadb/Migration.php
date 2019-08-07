@@ -10,5 +10,5 @@ use yii\db;
  */
 class Migration extends db\Migration
 {
-
+    use MigrationTrait;
 }

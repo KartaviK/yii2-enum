@@ -2,13 +2,13 @@
 
 namespace Kartavik\Yii2\Tests\Migration;
 
-use Kartavik\Yii2\Database\Mysql;
+use Kartavik\Yii2\Database\Mariadb;
 use Kartavik\Yii2\Tests\Mock\TestEnum;
 
 /**
  * Class M190226185953TestMariadbMigration
  */
-class M190226185953TestMariadbMigration extends Mysql\Migration
+class M190226185953TestMariadbMigration extends Mariadb\Migration
 {
     /**
      * {@inheritdoc}

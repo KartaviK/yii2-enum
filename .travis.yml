@@ -1,5 +1,8 @@
 language: php
 
+dist: trusty
+sudo: required
+
 services:
   - postgresql
   - mysql
@@ -13,6 +16,11 @@ php:
 
 addons:
   mariadb: '10.0'
+  apt:
+    packages:
+      - mysql-server-5.6
+      - mysql-client-core-5.6
+      - mysql-client-5.6
 
 cache:
   directories:

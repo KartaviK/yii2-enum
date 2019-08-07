@@ -9,6 +9,7 @@
 namespace Kartavik\Yii2\Validators;
 
 use MyCLabs\Enum\Enum;
+use yii\base\Model;
 use yii\validators;
 
 /**
@@ -38,6 +39,11 @@ class EnumValidator extends validators\Validator
     /** @var bool */
     public $useKey = false;
 
+    /**
+     * @param Model  $model
+     * @param string $attribute
+     * @return bool
+     */
     public function validateAttribute($model, $attribute): bool
     {
         $value = $model->$attribute;

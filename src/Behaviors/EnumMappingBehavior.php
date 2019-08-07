@@ -90,11 +90,11 @@ class EnumMappingBehavior extends base\Behavior
         return [
             EnumMappingBehavior::EVENT_TO_ENUMS => 'toEnums',
             EnumMappingBehavior::EVENT_TO_VALUES => 'toValues',
-            db\ActiveRecord::EVENT_AFTER_FIND => 'toEnums',
-            db\ActiveRecord::EVENT_AFTER_INSERT => 'toEnums',
-            db\ActiveRecord::EVENT_AFTER_UPDATE => 'toEnums',
-            db\ActiveRecord::EVENT_BEFORE_INSERT => 'toValues',
-            db\ActiveRecord::EVENT_BEFORE_UPDATE => 'toValues'
+            db\ActiveRecord::EVENT_AFTER_FIND => EnumMappingBehavior::EVENT_TO_ENUMS,
+            db\ActiveRecord::EVENT_AFTER_INSERT => EnumMappingBehavior::EVENT_TO_ENUMS,
+            db\ActiveRecord::EVENT_AFTER_UPDATE => EnumMappingBehavior::EVENT_TO_ENUMS,
+            db\ActiveRecord::EVENT_BEFORE_INSERT => EnumMappingBehavior::EVENT_TO_VALUES,
+            db\ActiveRecord::EVENT_BEFORE_UPDATE => EnumMappingBehavior::EVENT_TO_VALUES,
         ];
     }
 
@@ -140,7 +140,7 @@ class EnumMappingBehavior extends base\Behavior
     protected function castTypeIfExist(?string &$variable, string $attribute): void
     {
         if (isset($this->attributesType[$attribute])) {
-            settype($variable, $this->attributesType[$attribute]);
+            \settype($variable, $this->attributesType[$attribute]);
         }
     }
 
@@ -158,6 +158,6 @@ class EnumMappingBehavior extends base\Behavior
 
     protected function isUseKey(string $attribute): bool
     {
-        return isset(array_flip($this->useKeyFor)[$attribute]);
+        return isset(\array_flip($this->useKeyFor)[$attribute]);
     }
 }

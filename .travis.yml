@@ -3,33 +3,92 @@ language: php
 dist: trusty
 sudo: required
 
-services:
-  - postgresql
-  - mysql
-  - mariadb
-
-php:
-  - 7.1
-  - 7.2
-  - 7.3
-  - 7.4snapshot
-
-addons:
-  mariadb: '10.0'
-  apt:
-    packages:
-      - mysql-server-5.6
-      - mysql-client-core-5.6
-      - mysql-client-5.6
-
 cache:
   directories:
     - $HOME/.composer/cache
 
-env:
-  - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
-  - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
-  - DB_TYPE=mariadb DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+matrix:
+  include:
+    - php: '7.1'
+      services: mariadb
+      addons:
+        mariadb: '10.0'
+      env:
+        - DB_TYPE=mariadb DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+    - php: '7.1'
+      services: mysql
+      addons:
+        apt:
+          packages:
+            - mysql-server-5.6
+            - mysql-client-core-5.6
+            - mysql-client-5.6
+      env:
+        - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+    - php: '7.1'
+      services: postgresql
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '7.2'
+      services: mariadb
+      addons:
+        mariadb: '10.0'
+      env:
+        - DB_TYPE=mariadb DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+    - php: '7.2'
+      services: mysql
+      addons:
+        apt:
+          packages:
+            - mysql-server-5.6
+            - mysql-client-core-5.6
+            - mysql-client-5.6
+      env:
+        - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+    - php: '7.2'
+      services: postgresql
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '7.3'
+      services: mariadb
+      addons:
+        mariadb: '10.0'
+      env:
+        - DB_TYPE=mariadb DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+    - php: '7.3'
+      services: mysql
+      addons:
+        apt:
+          packages:
+            - mysql-server-5.6
+            - mysql-client-core-5.6
+            - mysql-client-5.6
+      env:
+        - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+    - php: '7.3'
+      services: postgresql
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '7.4snapshot'
+      services: mariadb
+      addons:
+        mariadb: '10.0'
+      env:
+        - DB_TYPE=mariadb DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+    - php: '7.4snapshot'
+      services: mysql
+      addons:
+        apt:
+          packages:
+            - mysql-server-5.6
+            - mysql-client-core-5.6
+            - mysql-client-5.6
+      env:
+        - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+    - php: '7.4snapshot'
+      services: postgresql
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
 
 before_install:
   - sh -c "if [ '$DB_TYPE' = 'pgsql' ]; then psql -c 'CREATE DATABASE yii2_enum;' -U postgres; fi"

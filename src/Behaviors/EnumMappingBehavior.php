@@ -19,15 +19,13 @@ use yii\db;
  * return [
  *      'enum' => [
  *          'class' => \Kartavik\Yii2\Behaviors\EnumMappingBehavior::class,
- *          'enumsAttributes' => [
- *              FirstYourEnum::class => [
- *                  'attribute1,
- *                  'attribute2',
- *              ],
- *              SecondYourEnum::class => [
- *                  'attribute3,
- *                  'attribute4',
- *              ],
+ *          'map' => [
+ *              'attribute1' => FirstYourEnum::class,
+ *              'attribute2' => SecondYourEnum::class,
+ *          ],
+ *          'attributesType' => [
+ *              'attribute1' => 'integer',
+ *              'attribute2' => 'float',
  *          ],
  *      ],
  * ];
@@ -77,14 +75,18 @@ class EnumMappingBehavior extends base\Behavior
      *
      * ```php
      * [
-     *      'attribute1', // values for this attrbiute will be as key in enum
+     *      'attribute1', // values for this attribute will be as key in enum
      * ]
      * ```
      *
      * @var array
+     * @since 2.2
      */
     public $useKeyFor = [];
 
+    /**
+     * {@inheritdoc}
+     */
     public function events(): array
     {
         return [
@@ -106,13 +108,13 @@ class EnumMappingBehavior extends base\Behavior
         $this->validateAttributes();
 
         foreach ($this->map as $attribute => $enum) {
-            $value = $this->owner->$attribute;
+            $value = $this->owner->{$attribute};
 
             if ($value instanceof $enum) {
                 /** @var \MyCLabs\Enum\Enum $value */
                 $enumValue = $this->isUseKey($attribute) ? $value->getKey() : $value->getValue();
                 $this->castTypeIfExist($enumValue, $attribute);
-                $this->owner->$attribute = $enumValue;
+                $this->owner->{$attribute} = $enumValue;
             }
         }
     }
@@ -126,11 +128,11 @@ class EnumMappingBehavior extends base\Behavior
         $this->validateAttributes();
 
         foreach ($this->map as $attribute => $enum) {
-            $value = $this->owner->$attribute;
+            $value = $this->owner->{$attribute};
 
             if (!$value instanceof Enum) {
                 $this->castTypeIfExist($value, $attribute);
-                $this->owner->$attribute = isset($this->owner->$attribute) && $this->isUseKey($attribute)
+                $this->owner->{$attribute} = isset($this->owner->{$attribute}) && $this->isUseKey($attribute)
                     ? \call_user_func([$enum, $value])
                     : new $enum($value);
             }
@@ -151,13 +153,13 @@ class EnumMappingBehavior extends base\Behavior
     {
         foreach ($this->map as $attribute => $enum) {
             if (!\class_exists($enum) || !\in_array(Enum::class, \class_parents($enum), true)) {
-                throw new base\InvalidConfigException("Class [$enum] must exist and implement " . Enum::class);
+                throw new base\InvalidConfigException("Class [{$enum}] must exist and implement " . Enum::class);
             }
         }
     }
 
     protected function isUseKey(string $attribute): bool
     {
-        return isset(\array_flip($this->useKeyFor)[$attribute]);
+        return \in_array($attribute, $this->useKeyFor, \true);
     }
 }

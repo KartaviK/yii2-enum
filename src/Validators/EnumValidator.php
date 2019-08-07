@@ -46,7 +46,7 @@ class EnumValidator extends validators\Validator
      */
     public function validateAttribute($model, $attribute): bool
     {
-        $value = $model->$attribute;
+        $value = $model->{$attribute};
 
         if ($value instanceof $this->targetEnum) {
             return true;

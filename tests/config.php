@@ -13,12 +13,23 @@ $config = [
     'id' => 'yii2-enum',
     'basePath' => \dirname(__DIR__),
     'components' => [
-        'db' => [
-            'class' => Connection::class,
-            'dsn' => $dsn,
-            'username' => \getenv("DB_USERNAME"),
-            'password' => \getenv("DB_PASSWORD") ?: null,
-        ],
+        'db' => array_merge(
+            [
+                'class' => Connection::class,
+                'dsn' => $dsn,
+                'username' => \getenv("DB_USERNAME"),
+                'password' => \getenv("DB_PASSWORD") ?: null,
+            ],
+            $dbType == 'mariadb'
+                ?
+                [
+                    'driverName' => 'mariadb',
+                    'schemaMap' => [
+                        'mariadb' => SamIT\Yii2\MariaDb\Schema::class
+                    ]
+                ]
+                : []
+        ),
     ],
 ];
 

@@ -8,6 +8,9 @@ $dbType = getenv('DB_TYPE');
 $host = getenv('DB_HOST');
 $name = getenv("DB_NAME");
 $port = getenv("DB_PORT");
+if ($dbType === 'mariadb') {
+    $dbType = 'mysql';
+}
 $dsn = "{$dbType}:host={$host};dbname={$name};port={$port}";
 $config = [
     'id' => 'yii2-enum',
@@ -23,9 +26,9 @@ $config = [
             $dbType == 'mariadb'
                 ?
                 [
-                    'driverName' => 'mariadb',
+                    'driverName' => 'mysql',
                     'schemaMap' => [
-                        'mariadb' => SamIT\Yii2\MariaDb\Schema::class
+                        'mysql' => SamIT\Yii2\MariaDb\Schema::class
                     ]
                 ]
                 : []

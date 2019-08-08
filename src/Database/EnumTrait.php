@@ -17,7 +17,7 @@ use MyCLabs\Enum\Enum;
 trait EnumTrait
 {
     /**
-     * @param array|string|Enum $enums
+     * @param array|string|Enum|null $enums
      *
      * @return array
      */

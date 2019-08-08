@@ -46,6 +46,9 @@
         }
     },
     "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
         "lint": "phpcs --standard=PSR2 ./src ./tests",
         "phpcbf": "phpcbf --standard=PSR2 ./src ./tests",
         "cover": "phpunit --coverage-clover=coverage.xml",

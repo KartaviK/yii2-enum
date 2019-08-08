@@ -6,12 +6,11 @@
  * @version 1.0
  */
 
-
 namespace Kartavik\Yii2\Database\Mysql;
 
 use Kartavik\Yii2\Database\EnumTrait;
 use MyCLabs\Enum\Enum;
-use yii\db\ColumnSchemaBuilder;
+use yii\db;
 
 /**
  * Trait SchemaBuilderTrait
@@ -24,18 +23,23 @@ trait SchemaBuilderTrait
     use EnumTrait;
 
     /**
+     * {@inheritDoc}
+     */
+    abstract protected function getDb(): db\Connection;
+
+    /**
      * @param array|string|Enum $values
      *
-     * @return ColumnSchemaBuilder
+     * @return db\ColumnSchemaBuilder
      * @throws \yii\base\NotSupportedException
      */
-    public function enum($values): ColumnSchemaBuilder
+    public function enum($values): db\ColumnSchemaBuilder
     {
         return $this->getDb()
             ->getSchema()
             ->createColumnSchemaBuilder(
                 $this->formatEnumValues(
-                    $this->convertEnums($values)
+                    $this->fetchEnums($values)
                 )
             );
     }

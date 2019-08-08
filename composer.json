@@ -5,7 +5,8 @@
     "require": {
         "php": "^7.1",
         "myclabs/php-enum": "^1.6",
-        "yiisoft/yii2": "^2.0.13.1"
+        "yiisoft/yii2": "^2.0.13",
+        "yidas/yii2-composer-bower-skip": "~2.0.0"
     },
     "license": "MIT",
     "authors": [

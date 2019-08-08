@@ -3,10 +3,6 @@ language: php
 dist: trusty
 sudo: required
 
-cache:
-  directories:
-    - $HOME/.composer/cache
-
 matrix:
   include:
     - php: '7.1'

@@ -6,7 +6,6 @@
  * @version 1.0
  */
 
-
 namespace Kartavik\Yii2\Database\Mariadb;
 
 use yii\db;

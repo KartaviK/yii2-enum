@@ -68,6 +68,7 @@
         "yiisoft/yii2-phpunit": "dev-master"
     },
     "suggest": {
-        "horat1us/yii2-base": "For better validation for ranges of const values"
+        "horat1us/yii2-base": "For better validation for ranges of const values",
+        "sam-it/yii2-mariadb": "For better MariaDB support"
     }
 }

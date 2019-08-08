@@ -6,7 +6,6 @@
  * @version 1.0
  */
 
-
 namespace Kartavik\Yii2\Database;
 
 use MyCLabs\Enum\Enum;
@@ -18,13 +17,13 @@ use MyCLabs\Enum\Enum;
 trait EnumTrait
 {
     /**
-     * @param array|Enum $enums
+     * @param array|string|Enum $enums
      *
      * @return array
      */
-    private function convertEnums($enums): array
+    private function fetchEnums($enums): array
     {
-        if (\is_string($enums) && \class_exists($enums) && \in_array(Enum::class, \class_parents($enums))) {
+        if (\is_string($enums) && \in_array(Enum::class, \class_parents($enums))) {
             /** @var Enum $enums */
             $enums = $enums::toArray();
         }
@@ -32,18 +31,22 @@ trait EnumTrait
         return (array)$enums;
     }
 
-    private function formatEnumValues(array $values): string
+    /**
+     * @param iterable $values
+     * @return string
+     */
+    private function formatEnumValues(iterable $values): string
     {
         $values = \implode(
             ', ',
             \array_map(
                 function ($value) {
-                    return "'$value'";
+                    return "'{$value}'";
                 },
                 \array_filter(
                     \array_map(function ($value) {
                         return (string)$value;
-                    }, $values),
+                    }, (array)$values),
                     function ($value) {
                         return !empty($value);
                     }

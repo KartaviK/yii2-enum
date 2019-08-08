@@ -6,12 +6,11 @@
  * @version 1.0
  */
 
-
 namespace Kartavik\Yii2\Database\Pgsql;
 
 use Kartavik\Yii2\Database\EnumTrait;
 use MyCLabs\Enum\Enum;
-use yii\db\ColumnSchemaBuilder;
+use yii\db;
 
 /**
  * Trait SchemaBuilderTrait
@@ -24,15 +23,20 @@ trait SchemaBuilderTrait
     use EnumTrait;
 
     /**
+     * @return db\Connection
+     */
+    abstract protected function getDb();
+
+    /**
      * @param string $name
      * @param array|Enum|null $values
      *
-     * @return ColumnSchemaBuilder
+     * @return db\ColumnSchemaBuilder
      * @throws \yii\base\NotSupportedException
      */
-    public function enum(string $name, $values = null): ColumnSchemaBuilder
+    public function enum(string $name, $values = null): db\ColumnSchemaBuilder
     {
-        $values = $this->convertEnums($values);
+        $values = $this->fetchEnums($values);
 
         if (!empty($values)) {
             $this->addEnum($name, $values);

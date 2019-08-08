@@ -6,7 +6,6 @@
  * @version 1.0
  */
 
-
 namespace Kartavik\Yii2\Database\Pgsql;
 
 use MyCLabs\Enum\Enum;
@@ -21,23 +20,18 @@ trait MigrationTrait
     use SchemaBuilderTrait;
 
     /**
-     * @param string $name
+     * @param string     $name
      * @param array|Enum $enums
      *
      * @throws db\Exception
      */
     public function addEnum(string $name, $enums): void
     {
-        $enums = $this->convertEnums($enums);
-
-        if (!\is_array($enums)) {
-            throw new db\Exception('Variable [values] must be an array or be instance of ' . Enum::class);
-        }
-
-        $enums = $this->formatEnumValues($enums);
-
         $transaction = $this->getDb()->beginTransaction();
-        $command = $transaction->db->createCommand("CREATE TYPE $name AS $enums");
+        $command = $transaction->db->createCommand(
+            "CREATE TYPE $name AS {$this->formatEnumValues($this->fetchEnums($enums))}"
+        );
+
         try {
             echo "    > create type $name ... ";
             $command->execute();
@@ -46,6 +40,7 @@ trait MigrationTrait
             echo "already exist, skipping";
             $transaction->rollBack();
         }
+
         echo PHP_EOL;
     }
 

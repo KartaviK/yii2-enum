@@ -7,11 +7,11 @@
     <br>
 </p>
 
-# Yii2 enum
-
 [![Latest Stable Version](https://poser.pugx.org/kartavik/yii2-enum/v/stable?format=flat)](https://packagist.org/packages/kartavik/yii2-enum)
+[![Total Downloads](https://poser.pugx.org/kartavik/yii2-enum/downloads)](https://packagist.org/packages/kartavik/yii2-enum)
 [![Build Status](https://travis-ci.com/KartaviK/yii2-enum.svg?branch=master)](https://travis-ci.com/KartaviK/yii2-enum)
 [![codecov](https://codecov.io/gh/KartaviK/yii2-enum/branch/master/graph/badge.svg)](https://codecov.io/gh/KartaviK/yii2-enum)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/KartaviK/yii2-enum/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/KartaviK/yii2-enum/?branch=master)
 
 Based on [myclabs\php-enum](https://github.com/myclabs/php-enum) package;
 

@@ -7,8 +7,6 @@
     <br>
 </p>
 
-# Yii2 enum
-
 [![Latest Stable Version](https://poser.pugx.org/kartavik/yii2-enum/v/stable?format=flat)](https://packagist.org/packages/kartavik/yii2-enum)
 [![Total Downloads](https://poser.pugx.org/kartavik/yii2-enum/downloads)](https://packagist.org/packages/kartavik/yii2-enum)
 [![Build Status](https://travis-ci.com/KartaviK/yii2-enum.svg?branch=master)](https://travis-ci.com/KartaviK/yii2-enum)

@@ -1,6 +1,6 @@
 {
     "name": "kartavik/yii2-enum",
-    "description": "Yii2 enum mapping behavior / validator / database column type",
+    "description": "Yii2 enum mapping behavior / validator / database internal type",
     "type": "library",
     "require": {
         "php": "^7.1",
@@ -46,7 +46,10 @@
         }
     ],
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "7.1"
+        }
     },
     "scripts": {
         "lint": "phpcs --standard=PSR2 ./src ./tests",

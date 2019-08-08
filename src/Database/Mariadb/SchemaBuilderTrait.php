@@ -23,9 +23,9 @@ trait SchemaBuilderTrait
     use EnumTrait;
 
     /**
-     * {@inheritDoc}
+     * @return db\Connection
      */
-    abstract protected function getDb(): db\Connection;
+    abstract protected function getDb();
 
     /**
      * @param array|string|Enum $values

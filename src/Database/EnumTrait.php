@@ -32,21 +32,21 @@ trait EnumTrait
     }
 
     /**
-     * @param array $values
+     * @param iterable $values
      * @return string
      */
-    private function formatEnumValues(array $values): string
+    private function formatEnumValues(iterable $values): string
     {
         $values = \implode(
             ', ',
             \array_map(
                 function ($value) {
-                    return "'$value'";
+                    return "'{$value}'";
                 },
                 \array_filter(
                     \array_map(function ($value) {
                         return (string)$value;
-                    }, $values),
+                    }, (array)$values),
                     function ($value) {
                         return !empty($value);
                     }

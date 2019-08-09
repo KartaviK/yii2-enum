@@ -123,28 +123,10 @@ matrix:
             - mysql-client-5.6
       env:
         - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
-#  With some reasons mysql9 with php7.4 not work
+#  With some reasons mysql8 with php7.4 not work
 #  Given exceptions:
 #      SQLSTATE[HY000] [2006] MySQL server has gone away
 #      PDOException: PDO::__construct(): Unexpected server response while doing caching_sha2 auth: 109
-#
-#    - php: '7.4snapshot'
-#      dist: xenial
-#      services: mysql
-#      env:
-#        - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
-#      before_install:
-#        - wget https://repo.mysql.com//mysql-apt-config_0.8.10-1_all.deb
-#        - sudo dpkg -i mysql-apt-config_0.8.10-1_all.deb
-#        - sudo apt-get update -q
-#        - sudo apt-get install -q -y --allow-unauthenticated -o Dpkg::Options::=--force-confnew mysql-server
-#        - sudo systemctl restart mysql
-#        - sudo mysql_upgrade
-#        - mysql --version
-#        - echo "[server]\nmax_allowed_packet=128M" | sudo tee -a /etc/mysql/my.cnf
-#        - echo "[server]\nwait_timeout=600" | sudo tee -a /etc/mysql/my.cnf
-#        - sudo systemctl restart mysql
-#        - mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'
     - php: '7.4snapshot'
       services: postgresql
       env:

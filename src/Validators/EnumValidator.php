@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Kartavik\Yii2\Validators;
 
 use MyCLabs\Enum\Enum;
-use yii\base\Model;
 use yii\validators;
 
 /**
@@ -42,26 +41,23 @@ class EnumValidator extends validators\Validator
     public $useKey = false;
 
     /**
-     * @param Model  $model
-     * @param string $attribute
-     * @return bool
+     * @param mixed $value
+     * @return array|null
      */
-    public function validateAttribute($model, $attribute): bool
+    protected function validateValue($value): ?array
     {
-        $value = $model->{$attribute};
+        $valid = $value instanceof $this->targetEnum
+            || $this->useKey && $this->targetEnum::isValidKey($value)
+            || $this->targetEnum::isValid($value);
 
-        if ($value instanceof $this->targetEnum) {
-            return true;
-        }
+        return !$valid ? [$this->getMessage(), []] : \null;
+    }
 
-        if ($this->useKey && $this->targetEnum::isValidKey($value)) {
-            return true;
-        } elseif ($this->targetEnum::isValid($value)) {
-            return true;
-        }
-
-        $model->addError($attribute, "Attribute [{$attribute}] must be instance or be part of {$this->targetEnum}");
-
-        return false;
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        return \Yii::t(static::class, "Attribute [{attribute}] must be instance or be part of {$this->targetEnum}");
     }
 }

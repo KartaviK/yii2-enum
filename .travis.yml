@@ -137,6 +137,7 @@ matrix:
         - sudo mysql_upgrade
         - mysql --version
         - echo "[server]\nmax_allowed_packet=128M" | sudo tee -a /etc/mysql/my.cnf
+        - echo "[server]\nwait_timeout=600" | sudo tee -a /etc/mysql/my.cnf
         - sudo systemctl restart mysql
         - mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'
     - php: '7.4snapshot'

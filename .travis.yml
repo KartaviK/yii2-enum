@@ -22,6 +22,7 @@ matrix:
       env:
         - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
     - php: '7.1'
+      dist: xenial
       services: mysql
       env:
         - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
@@ -54,6 +55,7 @@ matrix:
       env:
         - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
     - php: '7.2'
+      dist: xenial
       services: mysql
       env:
         - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
@@ -86,6 +88,7 @@ matrix:
       env:
         - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
     - php: '7.3'
+      dist: xenial
       services: mysql
       env:
         - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
@@ -118,6 +121,7 @@ matrix:
       env:
         - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
     - php: '7.4snapshot'
+      dist: xenial
       services: mysql
       env:
         - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=

@@ -33,7 +33,7 @@ class EnumValidatorTest extends TestCase
         $this->assertEquals(
             [
                 'second' => [
-                    "Attribute [second] must be instance or be part of Kartavik\Yii2\Tests\Mock\TestEnum"
+                    "Attribute [Second] must be instance or be part of Kartavik\Yii2\Tests\Mock\TestEnum"
                 ],
             ],
             $model->getErrors()
@@ -62,7 +62,7 @@ class EnumValidatorTest extends TestCase
         $this->assertEquals(
             [
                 'second' => [
-                    "Attribute [second] must be instance or be part of Kartavik\Yii2\Tests\Mock\NumericEnum"
+                    "Attribute [Second] must be instance or be part of Kartavik\Yii2\Tests\Mock\NumericEnum"
                 ],
             ],
             $model->getErrors()

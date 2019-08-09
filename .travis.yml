@@ -34,6 +34,7 @@ matrix:
         - sudo systemctl restart mysql
         - sudo mysql_upgrade
         - mysql --version
+        - mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'
     - php: '7.1'
       services: postgresql
       env:
@@ -67,6 +68,7 @@ matrix:
         - sudo systemctl restart mysql
         - sudo mysql_upgrade
         - mysql --version
+        - mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'
     - php: '7.2'
       services: postgresql
       env:
@@ -100,6 +102,7 @@ matrix:
         - sudo systemctl restart mysql
         - sudo mysql_upgrade
         - mysql --version
+        - mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'
     - php: '7.3'
       services: postgresql
       env:
@@ -133,6 +136,7 @@ matrix:
         - sudo systemctl restart mysql
         - sudo mysql_upgrade
         - mysql --version
+        - mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'
     - php: '7.4snapshot'
       services: postgresql
       env:

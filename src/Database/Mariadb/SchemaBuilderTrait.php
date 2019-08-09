@@ -6,6 +6,8 @@
  * @version 1.0
  */
 
+declare(strict_types=1);
+
 namespace Kartavik\Yii2\Database\Mariadb;
 
 use Kartavik\Yii2\Database\EnumTrait;

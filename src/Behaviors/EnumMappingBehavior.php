@@ -6,6 +6,8 @@
  * @version 2.0
  */
 
+declare(strict_types=1);
+
 namespace Kartavik\Yii2\Behaviors;
 
 use MyCLabs\Enum\Enum;
@@ -139,7 +141,11 @@ class EnumMappingBehavior extends base\Behavior
         }
     }
 
-    protected function castTypeIfExist(?string &$variable, string $attribute): void
+    /**
+     * @param mixed  $variable
+     * @param string $attribute
+     */
+    protected function castTypeIfExist(&$variable, string $attribute): void
     {
         if (isset($this->attributesType[$attribute])) {
             \settype($variable, $this->attributesType[$attribute]);

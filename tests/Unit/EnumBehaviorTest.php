@@ -93,37 +93,7 @@ class EnumBehaviorTest extends TestCase
         $this->expectException(base\InvalidConfigException::class);
         $this->expectExceptionMessage('Class [invalidEnumClass] must exist and implement MyCLabs\Enum\Enum');
 
-        $model = new class(['value' => 'value']) extends ActiveRecord
-        {
-            public static function tableName()
-            {
-                return 'record';
-            }
-
-            /** @var string */
-            public $value;
-
-            public function behaviors(): array
-            {
-                return [
-                    'enum' => [
-                        'class' => EnumMappingBehavior::class,
-                        'map' => [
-                            'value' => 'invalidEnumClass',
-                        ]
-                    ]
-                ];
-            }
-
-            public function rules(): array
-            {
-                return[
-                    ['value', 'string'],
-                ];
-            }
-        };
-
-        $model->save();
+        (new Mock\RecordWithInvalidBehavior(['value' => 'value']))->save();
     }
 
     public function testTriggerEventToValues(): void

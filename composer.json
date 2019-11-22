@@ -51,8 +51,8 @@
         ],
         "post-install-cmd": "cghooks add --ignore-lock",
         "post-update-cmd": "cghooks update",
-        "lint": "phpcs --standard=PSR2 ./src ./tests",
-        "phpcbf": "phpcbf --standard=PSR2 ./src ./tests",
+        "lint": "phpcs --standard=PSR12 ./src ./tests",
+        "phpcbf": "phpcbf --standard=PSR12 ./src ./tests",
         "cover": "phpunit --coverage-clover=coverage.xml",
         "test": "phpunit",
         "build": [

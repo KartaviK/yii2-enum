@@ -12,6 +12,7 @@
 [![Build Status](https://travis-ci.com/KartaviK/yii2-enum.svg?branch=master)](https://travis-ci.com/KartaviK/yii2-enum)
 [![codecov](https://codecov.io/gh/KartaviK/yii2-enum/branch/master/graph/badge.svg)](https://codecov.io/gh/KartaviK/yii2-enum)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/KartaviK/yii2-enum/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/KartaviK/yii2-enum/?branch=master)
+![Phpstan level](https://img.shields.io/badge/PHPStan-level%205-brightgreen.svg?style=flat&logo=phpstan)
 
 Based on [myclabs\php-enum](https://github.com/myclabs/php-enum) package;
 

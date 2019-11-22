@@ -49,8 +49,8 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
-        "lint": "phpcs --standard=PSR2 ./src ./tests",
-        "phpcbf": "phpcbf --standard=PSR2 ./src ./tests",
+        "lint": "phpcs --standard=PSR12 ./src ./tests",
+        "phpcbf": "phpcbf --standard=PSR12 ./src ./tests",
         "phpstan": "phpstan analyse -c phpstan.neon src tests",
         "cover": "phpunit --coverage-clover=coverage.xml",
         "test": "phpunit",

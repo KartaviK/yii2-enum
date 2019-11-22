@@ -25,11 +25,6 @@ trait SchemaBuilderTrait
     use EnumTrait;
 
     /**
-     * @return db\Connection
-     */
-    abstract protected function getDb();
-
-    /**
      * @param array|string|Enum $values
      *
      * @return db\ColumnSchemaBuilder

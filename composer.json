@@ -49,6 +49,8 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
+        "post-install-cmd": "cghooks add --ignore-lock",
+        "post-update-cmd": "cghooks update",
         "lint": "phpcs --standard=PSR2 ./src ./tests",
         "phpcbf": "phpcbf --standard=PSR2 ./src ./tests",
         "cover": "phpunit --coverage-clover=coverage.xml",
@@ -58,7 +60,17 @@
             "@cover"
         ]
     },
+    "extra": {
+        "hooks": {
+            "pre-commit": [
+                "composer lint",
+                "composer phpstan"
+            ],
+            "post-merge": "composer update --lock"
+        }
+    },
     "require-dev": {
+        "brainmaestro/composer-git-hooks": "^2.8",
         "kartavik/yii2-phpunit": "^1.0",
         "rector/rector": "^0.5.9",
         "sam-it/yii2-mariadb": "^1.1",

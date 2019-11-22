@@ -31,7 +31,7 @@ trait SchemaBuilderTrait
 
     /**
      * @param string $name
-     * @param array|Enum|null $values
+     * @param array|Enum|string|null $values
      *
      * @return db\ColumnSchemaBuilder
      * @throws \yii\base\NotSupportedException

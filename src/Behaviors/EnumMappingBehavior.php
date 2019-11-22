@@ -113,7 +113,9 @@ class EnumMappingBehavior extends base\Behavior
             $value = $this->owner->{$attribute};
 
             if ($value instanceof $enum) {
-                /** @var \MyCLabs\Enum\Enum $value */
+                /**
+                 * @var \MyCLabs\Enum\Enum $value
+                 */
                 $enumValue = $this->isUseKey($attribute) ? $value->getKey() : $value->getValue();
                 $this->castTypeIfExist($enumValue, $attribute);
                 $this->owner->{$attribute} = $enumValue;

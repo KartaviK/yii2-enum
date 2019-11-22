@@ -4,11 +4,7 @@ parameters:
     universalObjectCratesClasses:
         - \Yii
     bootstrap: %rootDir%/../../../tests/bootstrap.php
-    level: 7
+    level: 5
     includes:
         - vendor/phpstan/phpstan-phpunit/extension.neon
         - vendor/phpstan/phpstan-phpunit/rules.neon
-    ignoreErrors:
-        - '#Call to an undefined method object::getKey\(\)#'
-        - '#Call to an undefined method object::getValue\(\)#'
-        - '#Parameter \#1 \$function of function call_user_func expects callable\(\): mixed, array\(mixed, mixed\) given.#'

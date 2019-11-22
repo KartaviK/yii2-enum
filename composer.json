@@ -49,6 +49,8 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
+        "post-install-cmd": "cghooks add --ignore-lock",
+        "post-update-cmd": "cghooks update",
         "lint": "phpcs --standard=PSR12 ./src ./tests",
         "phpcbf": "phpcbf --standard=PSR12 ./src ./tests",
         "phpstan": "phpstan analyse -c phpstan.neon src tests",
@@ -60,7 +62,17 @@
             "@cover"
         ]
     },
+    "extra": {
+        "hooks": {
+            "pre-commit": [
+                "composer lint",
+                "composer phpstan"
+            ],
+            "post-merge": "composer update --lock"
+        }
+    },
     "require-dev": {
+        "brainmaestro/composer-git-hooks": "^2.8",
         "kartavik/yii2-phpunit": "^1.0",
         "phpstan/phpstan": "^0.11.19",
         "phpstan/phpstan-phpunit": "^0.11.2",

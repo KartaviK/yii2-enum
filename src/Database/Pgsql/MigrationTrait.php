@@ -23,8 +23,8 @@ trait MigrationTrait
     use SchemaBuilderTrait;
 
     /**
-     * @param string     $name
-     * @param array|Enum $enums
+     * @param string $name
+     * @param array|Enum|string $enums
      *
      * @throws db\Exception
      */

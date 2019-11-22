@@ -1,0 +1,10 @@
+parameters:
+    autoload_files:
+        - %rootDir%/../../yiisoft/yii2/Yii.php
+    universalObjectCratesClasses:
+        - \Yii
+    bootstrap: %rootDir%/../../../tests/bootstrap.php
+    level: 5
+    includes:
+        - vendor/phpstan/phpstan-phpunit/extension.neon
+        - vendor/phpstan/phpstan-phpunit/rules.neon

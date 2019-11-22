@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Roman Varkuta <roman.varkuta@gmail.com>
  * @license MIT

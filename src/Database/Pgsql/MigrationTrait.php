@@ -36,8 +36,9 @@ trait MigrationTrait
         );
 
         try {
-            echo "    > create type $name ... ";
+            echo "    > create type $name $enums ... ";
             $command->execute();
+            $transaction->commit();
             echo 'done';
         } catch (\Exception $exception) {
             echo "already exist, skipping";

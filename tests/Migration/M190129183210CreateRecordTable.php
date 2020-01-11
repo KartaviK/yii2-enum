@@ -12,7 +12,7 @@ class M190129183210CreateRecordTable extends Migration
     /**
      * @inheritdoc
      */
-    public function safeUp()
+    public function up()
     {
         $keyEnum = "enum ('FIRST', 'SECOND', 'THIRD', 'NULLABLE')";
         if ($this->getDb()->getDriverName() === 'pgsql') {
@@ -35,7 +35,7 @@ class M190129183210CreateRecordTable extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function down()
     {
         $this->dropTable('record');
         if ($this->getDb()->getDriverName() === 'pgsql') {

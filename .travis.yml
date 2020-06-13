@@ -37,6 +37,28 @@ matrix:
         - mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'
     - php: '7.1'
       services: postgresql
+      addons:
+        postgresql: "9.4"
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '7.1'
+      services: postgresql
+      addons:
+        postgresql: "10"
+        apt:
+          packages:
+            - postgresql-10
+            - postgresql-client-10
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '7.1'
+      services: postgresql
+      addons:
+        postgresql: "11.2"
+        apt:
+          packages:
+            - postgresql-11
+            - postgresql-client-11
       env:
         - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
     - php: '7.2'
@@ -71,6 +93,28 @@ matrix:
         - mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'
     - php: '7.2'
       services: postgresql
+      addons:
+        postgresql: "9.4"
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '7.2'
+      services: postgresql
+      addons:
+        postgresql: "10"
+        apt:
+          packages:
+            - postgresql-10
+            - postgresql-client-10
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '7.2'
+      services: postgresql
+      addons:
+        postgresql: "11.2"
+        apt:
+          packages:
+            - postgresql-11
+            - postgresql-client-11
       env:
         - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
     - php: '7.3'
@@ -105,6 +149,28 @@ matrix:
         - mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'
     - php: '7.3'
       services: postgresql
+      addons:
+        postgresql: "9.4"
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '7.3'
+      services: postgresql
+      addons:
+        postgresql: "10"
+        apt:
+          packages:
+            - postgresql-10
+            - postgresql-client-10
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '7.3'
+      services: postgresql
+      addons:
+        postgresql: "11.2"
+        apt:
+          packages:
+            - postgresql-11
+            - postgresql-client-11
       env:
         - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
     - php: '7.4snapshot'
@@ -129,6 +195,28 @@ matrix:
 #      PDOException: PDO::__construct(): Unexpected server response while doing caching_sha2 auth: 109
     - php: '7.4snapshot'
       services: postgresql
+      addons:
+        postgresql: "9.4"
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '7.4snapshot'
+      services: postgresql
+      addons:
+        postgresql: "10"
+        apt:
+          packages:
+            - postgresql-10
+            - postgresql-client-10
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '7.4snapshot'
+      services: postgresql
+      addons:
+        postgresql: "11.2"
+        apt:
+          packages:
+            - postgresql-11
+            - postgresql-client-11
       env:
         - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
 

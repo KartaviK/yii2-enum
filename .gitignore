@@ -3,3 +3,4 @@
 .DS_Store
 composer.lock
 .env
+.phpunit.result.cache

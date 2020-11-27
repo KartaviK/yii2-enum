@@ -3,7 +3,7 @@
     "description": "Yii2 enum mapping behavior / validator / database internal type",
     "type": "library",
     "require": {
-        "php": "^7.1",
+        "php": "^7.1 || ^8.0",
         "myclabs/php-enum": "^1.6",
         "yiisoft/yii2": "^2.0.13",
         "yidas/yii2-composer-bower-skip": "~2.0.0"
@@ -40,10 +40,7 @@
         }
     },
     "config": {
-        "sort-packages": true,
-        "platform": {
-            "php": "7.1"
-        }
+        "sort-packages": true
     },
     "scripts": {
         "post-root-package-install": [
@@ -73,13 +70,12 @@
     },
     "require-dev": {
         "brainmaestro/composer-git-hooks": "^2.8",
-        "kartavik/yii2-phpunit": "^1.0",
-        "phpstan/phpstan": "^0.11.19",
-        "phpstan/phpstan-phpunit": "^0.11.2",
-        "rector/rector": "^0.5.9",
-        "sam-it/yii2-mariadb": "^1.1",
-        "squizlabs/php_codesniffer": "^3.4",
-        "vlucas/phpdotenv": "^3.3"
+        "horat1us/yii2-phpunit": "^0.0.5",
+        "phpstan/phpstan": "^0.12.57",
+        "phpstan/phpstan-phpunit": "^0.12.16",
+        "sam-it/yii2-mariadb": "^3.0",
+        "squizlabs/php_codesniffer": "^3.5",
+        "vlucas/phpdotenv": "^5.2"
     },
     "suggest": {
         "horat1us/yii2-base": "For better validation for ranges of const values",

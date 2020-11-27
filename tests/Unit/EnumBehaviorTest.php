@@ -5,7 +5,6 @@ namespace Kartavik\Yii2\Tests\Unit;
 use Kartavik\Yii2\Behaviors\EnumMappingBehavior;
 use Kartavik\Yii2\Tests\Mock;
 use yii\base;
-use yii\db\ActiveRecord;
 
 /**
  * Class EnumBehaviorTest

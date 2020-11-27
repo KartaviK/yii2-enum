@@ -107,13 +107,13 @@ matrix:
       services: postgresql
       env:
         - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
-    - php: '7.4snapshot'
+    - php: '7.4'
       services: mariadb
       addons:
         mariadb: '10.0'
       env:
         - DB_TYPE=mariadb DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
-    - php: '7.4snapshot'
+    - php: '7.4'
       services: mysql
       addons:
         apt:
@@ -127,7 +127,41 @@ matrix:
 #  Given exceptions:
 #      SQLSTATE[HY000] [2006] MySQL server has gone away
 #      PDOException: PDO::__construct(): Unexpected server response while doing caching_sha2 auth: 109
-    - php: '7.4snapshot'
+    - php: '7.4'
+      services: postgresql
+      env:
+        - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+    - php: '8.0'
+      services: mariadb
+      addons:
+        mariadb: '10.0'
+      env:
+        - DB_TYPE=mariadb DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+    - php: '8.0'
+      services: mysql
+      addons:
+        apt:
+          packages:
+            - mysql-server-5.6
+            - mysql-client-core-5.6
+            - mysql-client-5.6
+      env:
+          - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+    - php: '8.0'
+      dist: xenial
+      services: mysql
+      env:
+        - DB_TYPE=mysql DB_NAME=yii2_enum DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+      before_install:
+        - wget https://repo.mysql.com//mysql-apt-config_0.8.10-1_all.deb
+        - sudo dpkg -i mysql-apt-config_0.8.10-1_all.deb
+        - sudo apt-get update -q
+        - sudo apt-get install -q -y --allow-unauthenticated -o Dpkg::Options::=--force-confnew mysql-server
+        - sudo systemctl restart mysql
+        - sudo mysql_upgrade
+        - mysql --version
+        - mysql -e 'CREATE DATABASE IF NOT EXISTS yii2_enum;'
+    - php: '8.0'
       services: postgresql
       env:
         - DB_TYPE=pgsql DB_NAME=yii2_enum DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
